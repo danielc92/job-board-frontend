@@ -8,6 +8,7 @@ import { createLogger } from "redux-logger"
 
 const logger = createLogger({
   // ...options
+  timestamp: true,
 })
 
 export const store = configureStore({
