@@ -12,15 +12,18 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ### Recipes
 
 ```
-import React from "react"
+import React, { Fragment } from "react"
 
 interface IProps {}
 
-const App: React.FC<IProps> = () => {
-  return <p>Sup dudes</p>
+interface IState {}
+
+const RegisterPage: React.FC<IProps> = () => {
+  return <Fragment></Fragment>
 }
 
-export default App
+export default RegisterPage
+
 
 ```
 
