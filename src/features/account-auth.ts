@@ -49,7 +49,19 @@ export const logoutUser = createAction("LOGOUT_SUCCESS")
 export const accountAuthSlice = createSlice({
   name: "account-auth",
   initialState,
-  reducers: {},
+  reducers: {
+    refresh_token: (state, action) => {
+      let token = localStorage.getItem(TOKEN_NAME)
+      if (token) {
+        const decoded_token: IUser = jwt_decode(token)
+        state.error = null
+        state.user = decoded_token
+        state.isFetching = false
+        state.isAuthenticated = true
+      }
+      return
+    },
+  },
   extraReducers: (buildler) => {
     buildler
       .addCase(loginUser.pending, (state, action) => {
@@ -74,6 +86,8 @@ export const accountAuthSlice = createSlice({
       })
   },
 })
+
+export const { refresh_token } = accountAuthSlice.actions
 
 export const selectUser = (state: RootState) => state.accountAuth
 

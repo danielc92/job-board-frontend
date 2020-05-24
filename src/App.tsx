@@ -5,10 +5,14 @@ import SigninPage from "pages/signin"
 import RegisterPage from "pages/register"
 import NewsListPage from "pages/news-list"
 import JobPostPage from "pages/job-post"
-
+import { useDispatch } from "react-redux"
+import { refresh_token } from "features/account-auth"
 interface IProps {}
 
 const App: React.FC<IProps> = () => {
+  // Refresh Authenticated everytime user refreshes browser.
+  const dispatch = useDispatch()
+  dispatch(refresh_token(null))
   return (
     <Fragment>
       <Route exact path="/" component={HomePage} />
