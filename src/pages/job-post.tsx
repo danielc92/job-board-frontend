@@ -42,8 +42,8 @@ import { properCaseTransform } from "utils/general"
 interface IState {
   title: string
   category: string
-  skills: string[]
-  benefits: string[]
+  skills: any[]
+  benefits: any[]
   company_summary: string
   job_summary: string
   company_name: string
@@ -120,25 +120,39 @@ const JobPostPage: React.FC<IProps> = () => {
     content: item.text,
   })
 
-  const validateForm = () => {
-    const errors = [
-      ...StringValidator(state.company_summary, 1, 500, "Company summary"),
-      ...StringValidator(state.job_summary, 1, 500, "Job summary"),
-      ...StringValidator(state.contact_summary, 1, 500, "Contact information"),
-      ...StringValidator(state.company_name, 0, 50, "Company name"),
-      ...ListValidator(state.skills, 1, 10, "Skills"),
-      ...ListValidator(state.benefits, 1, 10, "Benefits"),
-      ...StringValidator(state.title, 1, 50, "Job title"),
-      ...StringCharacterValidator(state.title, ALLOWED_CHARS_JOB, "Job title"),
-      ...IsEmptyValidator(state.category, "Job category"),
-      ...IsEmptyValidator(state.employment_type, "Employment type"),
-      ...IsEmptyValidator(state.salary_range_low, "Salary (minimum)"),
-      ...IsEmptyValidator(state.salary_range_high, "Salary (maximum)"),
-      ...SalaryRangeValidator(state.salary_range_low, state.salary_range_high),
-    ]
-
-    setErrors(errors)
-  }
+  useEffect(() => {
+    const validateForm = () => {
+      const errors = [
+        ...StringValidator(state.company_summary, 1, 500, "Company summary"),
+        ...StringValidator(state.job_summary, 1, 500, "Job summary"),
+        ...StringValidator(
+          state.contact_summary,
+          1,
+          500,
+          "Contact information"
+        ),
+        ...StringValidator(state.company_name, 0, 50, "Company name"),
+        ...ListValidator(state.skills, 1, 10, "Skills"),
+        ...ListValidator(state.benefits, 1, 10, "Benefits"),
+        ...StringValidator(state.title, 1, 50, "Job title"),
+        ...StringCharacterValidator(
+          state.title,
+          ALLOWED_CHARS_JOB,
+          "Job title"
+        ),
+        ...IsEmptyValidator(state.category, "Job category"),
+        ...IsEmptyValidator(state.employment_type, "Employment type"),
+        ...IsEmptyValidator(state.salary_range_low, "Salary (minimum)"),
+        ...IsEmptyValidator(state.salary_range_high, "Salary (maximum)"),
+        ...SalaryRangeValidator(
+          state.salary_range_low,
+          state.salary_range_high
+        ),
+      ]
+      setErrors(errors)
+    }
+    validateForm()
+  }, [state])
 
   useEffect(() => {
     const percent = calculateProgress(errors)
@@ -147,6 +161,7 @@ const JobPostPage: React.FC<IProps> = () => {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
+    console.log(name, value, "S")
     setState({ ...state, [name]: value })
   }
 
@@ -155,15 +170,16 @@ const JobPostPage: React.FC<IProps> = () => {
     setState({ ...state, [name]: value })
   }
 
+  const limit = 10
   const handleDropdownChange = (
     event: React.SyntheticEvent<HTMLElement, Event>,
     data: DropdownProps
   ) => {
-    const limit = 10
     const { name, value } = data
-    // if (value && (value.length <= limit)) {
-    // setState({...state, [name]: value })
-    // }
+    const values = data.value as string[]
+    if (values.length <= limit) {
+      setState({ ...state, [name]: value })
+    }
   }
 
   const calculateProgress = (errors: string[]) => {
@@ -191,29 +207,41 @@ const JobPostPage: React.FC<IProps> = () => {
       return
     }
 
-    // if (errors.length === 0)
-    //   let payload = {
-    //     title: state.title,
-    //     category: state.category,
-    //     skills: state.skills,
-    //     benefits: state.benefits,
-    //     company_name: state.company_name,
-    //     company_summary: state.company_summary,
-    //     job_summary: state.job_summary,
-    //     contact_summary: state.contact_summary,
-    //     salary_range_high: state.salary_range_high,
-    //     salary_range_low: state.salary_range_low,
-    //     employment_type: state.employment_type,
-    //     creator_id: user.user?._id
-    //   }
+    let payload = {}
+    if (errors.length === 0)
+      payload = {
+        title: state.title,
+        category: state.category,
+        skills: state.skills,
+        benefits: state.benefits,
+        company_name: state.company_name,
+        company_summary: state.company_summary,
+        job_summary: state.job_summary,
+        contact_summary: state.contact_summary,
+        salary_range_high: state.salary_range_high,
+        salary_range_low: state.salary_range_low,
+        employment_type: state.employment_type,
+        creator_id: user.user?._id,
+      }
 
-    //if (Object.entries(location).length > 0) {
-    // payload = {
-    //   ...payload,
-    //   location: location.location,
-    //   location_string: location.location_string,
+    const selectedLocation = locations.locations?.find(
+      (l) => state.location === l.location_string
+    )
+    if (selectedLocation) {
+      const { location, location_string } = selectedLocation
+      payload = {
+        ...payload,
+        location,
+        location_string,
+      }
+    }
+    // if (Object.entries(location).length > 0) {
+    //   payload = {
+    //     ...payload,
+    //     location: location.location,
+    //     location_string: location.location_string,
+    //   }
     // }
-    //}
 
     //   this.props.propsCreateJob(payload)
   }
