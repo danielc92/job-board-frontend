@@ -10,11 +10,9 @@ const logger = createLogger({
   // ...options
 })
 
-const store = configureStore({
+export const store = configureStore({
   reducer: rootReducer,
   middleware: [...getDefaultMiddleware(), logger as Middleware],
 })
 
 export type RootState = ReturnType<typeof store.getState>
-
-export default store
