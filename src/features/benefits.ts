@@ -11,7 +11,9 @@ interface IApiBenefit {
 interface IStateBenefits {
   error: null | string
   isFetching: boolean
-  benefits: IApiBenefit[] | null
+  benefits: {
+    results: IApiBenefit[]
+  } | null
 }
 const initialState: IStateBenefits = {
   error: null,
@@ -58,6 +60,6 @@ export const benefitSlice = createSlice({
   },
 })
 
-export const selectBenefits = (state: RootState) => state.benefit
+export const selectBenefits = (state: RootState) => state.benefits
 
 export default benefitSlice.reducer
