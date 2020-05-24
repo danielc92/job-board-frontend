@@ -18,7 +18,7 @@ const initialState: IStateRegister = {
   modal_open: false,
 }
 
-interface IPayloadResetPassword {
+interface IPayloadRegister {
   email: string
   password: string
   first_name: string
@@ -28,7 +28,7 @@ interface IPayloadResetPassword {
 
 export const registerUser = createAsyncThunk(
   "register",
-  async (args: IPayloadResetPassword, thunkAPI) => {
+  async (args: IPayloadRegister, thunkAPI) => {
     try {
       const response = await api.post("auth/register", args)
       return response.data
