@@ -66,6 +66,6 @@ export const newsSlice = createSlice({
   },
 })
 
-export const selectNewsList = (state: RootState) => state.newsList
+export const selectNewsList = (state: RootState) => state.news
 
 export default newsSlice.reducer
