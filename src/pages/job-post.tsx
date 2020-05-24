@@ -12,6 +12,7 @@ import {
   DropdownProps,
   TextAreaProps,
   DropdownItemProps,
+  DropdownOnSearchChangeData,
 } from "semantic-ui-react"
 
 import { checkTokenIsValid } from "utils/auth"
@@ -36,6 +37,7 @@ import VerticallyPaddedContainer from "sections/global/VerticallyPaddedContainer
 import ProgressBar from "sections/job-post/ProgressBar"
 import Navbar from "sections/global/Navbar"
 import Footer from "sections/global/Footer"
+import { properCaseTransform } from "utils/general"
 
 interface IState {
   title: string
@@ -216,18 +218,20 @@ const JobPostPage: React.FC<IProps> = () => {
     //   this.props.propsCreateJob(payload)
   }
 
-  //   handleSearchChange = (event, data) => {
-  //     const { searchQuery } = data
-  //     const { propsGetLocations, locations } = this.props
-  //     const cleanQuery = searchQuery.trim()
-  //     this.setState({ searchQuery: cleanQuery })
-  //     const exists = locations.filter((i) => i.search === cleanQuery)
+  const handleSearchChange = (
+    event: React.SyntheticEvent<HTMLElement, Event>,
+    data: DropdownOnSearchChangeData
+  ): void => {
+    const { searchQuery } = data
+    const cleanQuery = searchQuery.trim()
+    setState({ ...state, searchQuery: cleanQuery })
+    //   const exists = locations.filter((i) => i.search === cleanQuery)
 
-  //     // No duplicate requests
-  //     if (cleanQuery.length >= 2 && exists.length === 0) {
-  //       propsGetLocations(searchQuery)
-  //     }
-  //   }
+    // No duplicate requests
+    // if (cleanQuery.length >= 2 && exists.length === 0) {
+    dispatch(getLocations(searchQuery as string))
+    // }
+  }
 
   //   render() {
   //     const {
@@ -307,7 +311,7 @@ const JobPostPage: React.FC<IProps> = () => {
                   </Form.Group>
 
                   <Form.Group widths="equal">
-                    {/* <Form.Dropdown
+                    <Form.Dropdown
                       onSearchChange={handleSearchChange}
                       onChange={handleDropdownChange}
                       name="location"
@@ -319,11 +323,16 @@ const JobPostPage: React.FC<IProps> = () => {
                       search
                       renderLabel={customRender}
                       options={
-                        locationOptions.length > 0
-                          ? locationOptions[0]["data"]
-                          : null
+                        locations.locations?.map((l, index) => ({
+                          key: index.toString(),
+                          text: properCaseTransform(l.location_string),
+                          value: l.location_string,
+                        }))
+                        // locationOptions.length > 0
+                        //   ? locationOptions[0]["data"]
+                        //   : null
                       }
-                    /> */}
+                    />
                     <Form.Dropdown
                       onChange={handleDropdownChange}
                       name="category"
