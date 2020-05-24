@@ -8,13 +8,12 @@ interface IProps {}
 const HomePage: React.FC<IProps> = () => {
   const user = useSelector(selectUser)
   const dispatch = useDispatch()
-  console.log(user)
   return (
     <Fragment>
       <button
         onClick={() =>
           dispatch(
-            loginUser({ email: "test2@test.com", password: "123456789" })
+            loginUser({ email: "test2@test.com", password: "123456789d" })
           )
         }
       >
