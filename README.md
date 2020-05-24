@@ -1,5 +1,29 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
 
+## Stack
+
+- Typescript
+- React
+- Semantic UI React
+- Axios
+- Redux
+- Redux Toolkit
+
+### Recipes
+
+```
+import React from "react"
+
+interface IProps {}
+
+const App: React.FC<IProps> = () => {
+  return <p>Sup dudes</p>
+}
+
+export default App
+
+```
+
 ## Available Scripts
 
 In the project directory, you can run:
