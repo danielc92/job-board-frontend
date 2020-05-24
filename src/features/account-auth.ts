@@ -1,13 +1,25 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit"
+import {
+  createSlice,
+  createAsyncThunk,
+  PayloadAction,
+  createAction,
+} from "@reduxjs/toolkit"
 import { RootState } from "../app/store"
 import { api } from "api"
 import { helpers } from "helpers"
 import jwt_decode from "jwt-decode"
 import { TOKEN_NAME } from "settings"
 
+interface IUser {
+  _id: string
+  email: string
+  exp: number
+  iat: number
+  is_employer: boolean
+}
 interface IStateAuth {
   isAuthenticated: boolean
-  user: any
+  user: IUser | null
   error: null | string
   isFetching: boolean
 }
@@ -36,6 +48,9 @@ export const loginUser = createAsyncThunk(
     }
   }
 )
+
+export const logoutUser = createAction("LOGOUT_SUCCESS")
+
 export const accountAuthSlice = createSlice({
   name: "account-auth",
   initialState,
