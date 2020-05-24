@@ -12,6 +12,7 @@
     "moduleResolution": "node",
     "downlevelIteration": true,
     "resolveJsonModule": true,
+    "removeComments": true,
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react",
