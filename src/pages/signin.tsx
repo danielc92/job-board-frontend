@@ -20,6 +20,7 @@ import {
   resetPassword,
   reset,
 } from "features/account-reset-request"
+import Navbar from "sections/global/Navbar"
 
 interface RouteProps {
   redirect_message?: string
@@ -90,6 +91,7 @@ const SigninPage: React.FC<IProps> = ({ location, history }) => {
   const { hidePassword, email, error, password } = state
   return (
     <Fragment>
+      <Navbar />
       <Container>
         <VerticallyPaddedContainer size="4">
           <Grid columns={2} stackable padded>

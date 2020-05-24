@@ -3,14 +3,14 @@ import { RootState } from "../app/store"
 import { api } from "api"
 import { handleAxiosError } from "utils/api"
 
-interface IStateResetPassword {
+interface IStateRegister {
   error: string | null
   isFetching: boolean
   modal_header: string
   modal_body: string
   modal_open: boolean
 }
-const initialState: IStateResetPassword = {
+const initialState: IStateRegister = {
   error: null,
   isFetching: false,
   modal_header: "",
@@ -20,13 +20,17 @@ const initialState: IStateResetPassword = {
 
 interface IPayloadResetPassword {
   email: string
+  password: string
+  first_name: string
+  last_name: string
+  is_employer: boolean
 }
 
-export const resetPassword = createAsyncThunk(
-  "account-reset-request-attempt",
+export const registerUser = createAsyncThunk(
+  "register",
   async (args: IPayloadResetPassword, thunkAPI) => {
     try {
-      const response = await api.post("auth/send-reset-password", args)
+      const response = await api.post("auth/register", args)
       return response.data
     } catch (error) {
       const value = handleAxiosError(error)
@@ -35,39 +39,39 @@ export const resetPassword = createAsyncThunk(
   }
 )
 
-export const resetRequestSlice = createSlice({
-  name: "account-reset-request",
+export const registerSlice = createSlice({
+  name: "register",
   initialState,
   reducers: {
     reset: (state) => initialState,
   },
   extraReducers: (buildler) => {
     buildler
-      .addCase(resetPassword.pending, (state, action) => {
+      .addCase(registerUser.pending, (state, action) => {
         state.error = null
         state.isFetching = true
-        state.modal_body = "Please wait while we process your request"
-        state.modal_header = "Processing"
+        state.modal_body = ""
+        state.modal_header = ""
         state.modal_open = false
       })
-      .addCase(resetPassword.fulfilled, (state, action) => {
+      .addCase(registerUser.fulfilled, (state, action) => {
         state.error = null
         state.isFetching = false
         state.modal_body = action.payload.message
         state.modal_header = "Success"
         state.modal_open = true
       })
-      .addCase(resetPassword.rejected, (state, action) => {
+      .addCase(registerUser.rejected, (state, action) => {
         state.error = action.payload as string
         state.isFetching = false
         state.modal_body = action.payload as string
-        state.modal_header = "An error has occured"
+        state.modal_header = "Error"
         state.modal_open = true
       })
   },
 })
 
-export const { reset } = resetRequestSlice.actions
-export const selectResetPassword = (state: RootState) => state.resetPassword
+export const { reset } = registerSlice.actions
+export const selectRegister = (state: RootState) => state.register
 
-export default resetRequestSlice.reducer
+export default registerSlice.reducer

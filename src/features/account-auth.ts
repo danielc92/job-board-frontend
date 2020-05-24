@@ -1,14 +1,9 @@
-import {
-  createSlice,
-  createAsyncThunk,
-  PayloadAction,
-  createAction,
-} from "@reduxjs/toolkit"
+import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit"
 import { RootState } from "../app/store"
 import { api } from "api"
-import { helpers } from "helpers"
 import jwt_decode from "jwt-decode"
 import { TOKEN_NAME } from "settings"
+import { handleAxiosError } from "utils/api"
 
 interface IUser {
   _id: string
@@ -43,7 +38,7 @@ export const loginUser = createAsyncThunk(
       const response = await api.post<IApiLogin>("auth/login", args)
       return response.data
     } catch (error) {
-      const value = helpers.handleAxiosError(error)
+      const value = handleAxiosError(error)
       return thunkAPI.rejectWithValue(value)
     }
   }
