@@ -1,17 +1,16 @@
 import React, { Fragment } from "react"
 import { Menu, Container, Button } from "semantic-ui-react"
-import { selectUser } from "features/account-auth"
-import { useSelector } from "react-redux"
+import { selectUser, logoutUser } from "features/account-auth"
+import { useSelector, useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
 import ImportantAlert from "./ImportantAlert"
 interface IProps {}
 
 const Navbar: React.FC<IProps> = () => {
   const user = useSelector(selectUser)
-
+  const dispatch = useDispatch()
   const handleLogout = (): void => {
-    // this.props.propsLogoutUser()
-    console.log("Logging out.")
+    dispatch(logoutUser())
   }
 
   return (
