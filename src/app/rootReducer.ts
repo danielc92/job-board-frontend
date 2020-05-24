@@ -2,17 +2,24 @@ import todos from "features/example"
 import accountAuth from "features/account-auth"
 import resetPassword from "features/account-reset-request"
 import register from "features/register"
-import newsList from "features/news-list"
+import news from "features/news-list"
+import skills from "features/skills"
+import categories from "features/categories"
+import benefit from "features/benefits"
 import { combineReducers, Action } from "@reduxjs/toolkit"
 import { TOKEN_NAME } from "settings"
 
 const appReducer = combineReducers({
-  todos,
   accountAuth,
+  benefit,
+  categories,
+  news,
   register,
   resetPassword,
-  newsList,
+  skills,
+  todos,
 })
+
 export const rootReducer = (state: any, action: Action) => {
   if (action.type === "LOGOUT_SUCCESS") {
     localStorage.removeItem(TOKEN_NAME)
