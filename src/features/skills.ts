@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import { RootState } from "../app/store"
 import { api } from "api"
-import { handleAxiosError } from "utils/api"
+import { handleAxiosError, getConfig } from "utils/api"
 
 interface IApiSkill {
   name: string
@@ -23,7 +23,8 @@ export const getSkills = createAsyncThunk(
   "skills-list",
   async (args: void, thunkAPI) => {
     try {
-      const response = await api.get(`skill/list`)
+      const config = getConfig()
+      const response = await api.get(`skill/list`, config)
       return response.data
     } catch (error) {
       const value = handleAxiosError(error)
