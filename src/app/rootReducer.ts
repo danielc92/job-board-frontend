@@ -5,15 +5,17 @@ import register from "features/register"
 import news from "features/news-list"
 import skills from "features/skills"
 import categories from "features/categories"
-import benefit from "features/benefits"
+import benefits from "features/benefits"
+import locations from "features/locations"
 import { combineReducers, Action } from "@reduxjs/toolkit"
 import { TOKEN_NAME } from "settings"
 
 const appReducer = combineReducers({
   accountAuth,
-  benefit,
+  benefits,
   categories,
   news,
+  locations,
   register,
   resetPassword,
   skills,
