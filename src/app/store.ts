@@ -3,7 +3,7 @@ import {
   getDefaultMiddleware,
   Middleware,
 } from "@reduxjs/toolkit"
-import counterReducer from "../features/counter/counterSlice"
+import { rootReducer } from "app/rootReducer"
 import { createLogger } from "redux-logger"
 
 const logger = createLogger({
@@ -11,9 +11,7 @@ const logger = createLogger({
 })
 
 const store = configureStore({
-  reducer: {
-    counter: counterReducer,
-  },
+  reducer: rootReducer,
   middleware: [...getDefaultMiddleware(), logger as Middleware<any>],
 })
 

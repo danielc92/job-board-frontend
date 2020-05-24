@@ -1,8 +1,11 @@
 import { createSlice, Dispatch, createAsyncThunk } from "@reduxjs/toolkit"
-import {} from "."
-import store, { RootState } from "../../app/store"
+import { RootState } from "../app/store"
 
-const initialState: ITodos = {
+const initialState: {
+  loading: boolean
+  results: any[]
+  error: string | null
+} = {
   loading: false,
   results: [],
   error: null,
