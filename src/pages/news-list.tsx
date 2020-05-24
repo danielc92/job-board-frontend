@@ -33,7 +33,6 @@ const NewsListPage: React.FC<IProps> = () => {
     const { search } = locationSelector
     if (search.length > 0) {
       const query = querystring.parse(locationSelector.search.substring(1))
-
       dispatch(getNewsList(query))
     } else {
       dispatch(getNewsList({ page: "1" }))
@@ -52,7 +51,9 @@ const NewsListPage: React.FC<IProps> = () => {
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
     data: PaginationProps
   ) => {
-    let queryObject = querystring.parse(historySelector.location.search)
+    let queryObject = querystring.parse(
+      historySelector.location.search.substring(1)
+    )
     queryObject.page = data.activePage as string
 
     let queryString = querystring.stringify(queryObject)
