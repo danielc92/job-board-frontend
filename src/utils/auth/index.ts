@@ -1,5 +1,5 @@
 import jwt_decode from "jwt-decode"
-import { TOKEN_NAME } from "app_constants"
+import { TOKEN_NAME } from "settings"
 import { store } from "app/store"
 
 interface IToken {
