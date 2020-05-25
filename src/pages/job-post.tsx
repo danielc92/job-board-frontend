@@ -188,12 +188,13 @@ const JobPostPage: React.FC<IProps> = () => {
   }
 
   const setTextInputDelayed = useCallback(
-    throttle((e: React.ChangeEvent<HTMLInputElement>) => setTextInput(e), 500),
+    debounce((e: React.ChangeEvent<HTMLInputElement>) => setTextInput(e), 200),
     []
   )
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTextInputDelayed(event)
+    // setTextInput(event)
   }
 
   const setTextArea = (event: any) => {
@@ -204,7 +205,7 @@ const JobPostPage: React.FC<IProps> = () => {
   }
 
   const setTextAreaDelayed = useCallback(
-    throttle((e: any) => setTextArea(e), 750),
+    throttle((e: any) => setTextArea(e), 200),
     []
   )
 
@@ -308,7 +309,7 @@ const JobPostPage: React.FC<IProps> = () => {
         event: React.SyntheticEvent<HTMLElement, Event>,
         data: DropdownOnSearchChangeData
       ) => queryLocations(event, data),
-      600
+      500
     ),
     []
   )
