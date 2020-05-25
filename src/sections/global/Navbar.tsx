@@ -2,15 +2,17 @@ import React, { Fragment } from "react"
 import { Menu, Container, Button } from "semantic-ui-react"
 import { selectUser, logoutUser } from "features/account-auth"
 import { useSelector, useDispatch } from "react-redux"
-import { Link } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 import ImportantAlert from "./ImportantAlert"
 interface IProps {}
 
 const Navbar: React.FC<IProps> = () => {
   const user = useSelector(selectUser)
   const dispatch = useDispatch()
+  const history = useHistory()
   const handleLogout = (): void => {
     dispatch(logoutUser())
+    history.push("/sign-in")
   }
 
   return (
