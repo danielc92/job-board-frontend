@@ -1,4 +1,10 @@
-import React, { Component, Fragment, useState, useEffect } from "react"
+import React, {
+  Component,
+  Fragment,
+  useState,
+  useEffect,
+  useCallback,
+} from "react"
 import {
   Segment,
   Modal,
@@ -13,7 +19,9 @@ import {
   TextAreaProps,
   DropdownItemProps,
   DropdownOnSearchChangeData,
+  ModalHeader,
 } from "semantic-ui-react"
+import { debounce, throttle } from "lodash"
 
 import { checkTokenIsValid } from "utils/auth"
 import {
@@ -30,6 +38,12 @@ import { useDispatch, useSelector } from "react-redux"
 import { getSkills, selectSkills } from "features/skills"
 import { getCategories, selectCategories } from "features/categories"
 import { selectUser, logoutUser } from "features/account-auth"
+import {
+  selectJobPost,
+  reset,
+  postJob,
+  IPayloadJobPost,
+} from "features/job-post"
 import { useHistory } from "react-router-dom"
 import { getLocations, selectLocations } from "features/locations"
 import { getBenefits, selectBenefits } from "features/benefits"
@@ -38,12 +52,13 @@ import ProgressBar from "sections/job-post/ProgressBar"
 import Navbar from "sections/global/Navbar"
 import Footer from "sections/global/Footer"
 import { properCaseTransform } from "utils/general"
+import BannerGroup from "sections/global/BannerGroup"
 
 interface IState {
   title: string
   category: string
-  skills: any[]
-  benefits: any[]
+  skills: string[]
+  benefits: string[]
   company_summary: string
   job_summary: string
   company_name: string
@@ -51,10 +66,16 @@ interface IState {
   salary_range_low: string
   salary_range_high: string
   employment_type: string
-  location: any
   searchQuery: string
+  location_id: string
+  location: {
+    coordinates: number[]
+    type: string
+  }
+  location_string: string
 }
-const initialState = {
+const initialState: IState = {
+  location_id: "",
   title: "",
   category: "",
   skills: [],
@@ -66,7 +87,11 @@ const initialState = {
   salary_range_low: "",
   salary_range_high: "",
   employment_type: "",
-  location: {},
+  location: {
+    coordinates: [0, 0],
+    type: "Point",
+  },
+  location_string: "",
   searchQuery: "",
 }
 
@@ -106,14 +131,13 @@ const JobPostPage: React.FC<IProps> = () => {
   const [percent, setPercent] = useState<number>(0)
 
   const skills = useSelector(selectSkills)
+  const jobPost = useSelector(selectJobPost)
   const categories = useSelector(selectCategories)
   const benefits = useSelector(selectBenefits)
   const locations = useSelector(selectLocations)
   const user = useSelector(selectUser)
 
-  const closeModal = () => {
-    // this.props.propsResetJob()
-  }
+  // const delayedValidate = useCallback(throttle(q => sendQuery(q), 500), [])
 
   const customRender = (item: DropdownItemProps) => ({
     color: "green",
@@ -155,13 +179,12 @@ const JobPostPage: React.FC<IProps> = () => {
   }, [state])
 
   useEffect(() => {
-    const percent = calculateProgress(errors)
+    const percent = calculateProgress(errors, 10)
     setPercent(percent)
   }, [errors])
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
-    console.log(name, value, "S")
     setState({ ...state, [name]: value })
   }
 
@@ -171,7 +194,7 @@ const JobPostPage: React.FC<IProps> = () => {
   }
 
   const limit = 10
-  const handleDropdownChange = (
+  const handleDropdownChangeList = (
     event: React.SyntheticEvent<HTMLElement, Event>,
     data: DropdownProps
   ) => {
@@ -182,21 +205,26 @@ const JobPostPage: React.FC<IProps> = () => {
     }
   }
 
-  const calculateProgress = (errors: string[]) => {
-    let max = 6
+  const handleDropdownChange = (
+    event: React.SyntheticEvent<HTMLElement, Event>,
+    data: DropdownProps
+  ) => setState({ ...state, [data.name]: data.value })
+
+  const calculateProgress = (errors: string[], maxErrors: number) => {
     let numErrors = errors.length
 
-    if (numErrors === max) return 0
+    if (numErrors === maxErrors) return 0
     else if (numErrors === 0) {
       return 100
     }
-    return ((max - numErrors) / max) * 100
+    return ((maxErrors - numErrors) / maxErrors) * 100
   }
+
+  console.log("Rendering")
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    // const { errors, location } = this.state
     // Initial check to see if token has expired
     if (!checkTokenIsValid()) {
       dispatch(logoutUser())
@@ -225,7 +253,7 @@ const JobPostPage: React.FC<IProps> = () => {
       }
 
     const selectedLocation = locations.locations?.find(
-      (l) => state.location === l.location_string
+      (l) => state.location_id === l._id
     )
     if (selectedLocation) {
       const { location, location_string } = selectedLocation
@@ -235,46 +263,28 @@ const JobPostPage: React.FC<IProps> = () => {
         location_string,
       }
     }
-    // if (Object.entries(location).length > 0) {
-    //   payload = {
-    //     ...payload,
-    //     location: location.location,
-    //     location_string: location.location_string,
-    //   }
-    // }
 
-    //   this.props.propsCreateJob(payload)
+    dispatch(postJob(payload as IPayloadJobPost))
   }
 
+  const closeModal = (): void => {
+    dispatch(reset())
+  }
+  // Handles searching for new location lists on type
   const handleSearchChange = (
     event: React.SyntheticEvent<HTMLElement, Event>,
     data: DropdownOnSearchChangeData
   ): void => {
     const { searchQuery } = data
     const cleanQuery = searchQuery.trim()
-    setState({ ...state, searchQuery: cleanQuery })
-    //   const exists = locations.filter((i) => i.search === cleanQuery)
-
-    // No duplicate requests
-    // if (cleanQuery.length >= 2 && exists.length === 0) {
-    dispatch(getLocations(searchQuery as string))
-    // }
+    setState({
+      ...state,
+      searchQuery: cleanQuery,
+    })
+    if (cleanQuery.length >= 2) {
+      dispatch(getLocations(`search=${cleanQuery}`))
+    }
   }
-
-  //   render() {
-  //     const {
-  //       errors,
-  //       job_summary,
-  //       company_summary,
-  //       percent,
-  //       contact_summary,
-  //       searchQuery,
-  //     } = this.state
-  //     const { auth, benefit, category, job, locations, skill } = this.props
-
-  //     const locationOptions = locations.filter(
-  //       (item) => item.search === searchQuery
-  //     )
 
   return (
     <Fragment>
@@ -305,7 +315,7 @@ const JobPostPage: React.FC<IProps> = () => {
                       maxLength={50}
                     />
                     <Form.Dropdown
-                      onChange={handleDropdownChange}
+                      onChange={handleDropdownChangeList}
                       value={state.skills}
                       name="skills"
                       label="Skills"
@@ -321,7 +331,7 @@ const JobPostPage: React.FC<IProps> = () => {
                       renderLabel={customRender}
                     ></Form.Dropdown>
                     <Form.Dropdown
-                      onChange={handleDropdownChange}
+                      onChange={handleDropdownChangeList}
                       value={state.benefits}
                       name="benefits"
                       label="Benefits"
@@ -342,24 +352,20 @@ const JobPostPage: React.FC<IProps> = () => {
                     <Form.Dropdown
                       onSearchChange={handleSearchChange}
                       onChange={handleDropdownChange}
-                      name="location"
+                      name="location_id"
                       label="Location"
                       placeholder="Search suburb, postcode, state"
                       fluid
                       selectOnNavigation={false}
                       selection
                       search
+                      loading={locations.isFetching}
                       renderLabel={customRender}
-                      options={
-                        locations.locations?.map((l, index) => ({
-                          key: index.toString(),
-                          text: properCaseTransform(l.location_string),
-                          value: l.location_string,
-                        }))
-                        // locationOptions.length > 0
-                        //   ? locationOptions[0]["data"]
-                        //   : null
-                      }
+                      options={locations.locations?.map((l, index) => ({
+                        key: index.toString(),
+                        text: properCaseTransform(l.location_string),
+                        value: l._id,
+                      }))}
                     />
                     <Form.Dropdown
                       onChange={handleDropdownChange}
@@ -448,35 +454,28 @@ const JobPostPage: React.FC<IProps> = () => {
                     } chars remaining)`}
                   />
 
-                  {/* <Form.Button
-                    loading={job.loading}
+                  <Form.Button
+                    loading={jobPost.isFetching}
                     disabled={!(errors.length === 0)}
                     size="big"
                     color="green"
                   >
                     <Icon name="add square"></Icon>Create job
-                  </Form.Button> */}
+                  </Form.Button>
 
-                  {/*
                   <Modal
-                    open={job.data || job.error ? true : false}
+                    open={jobPost.modalHeader.length > 0}
                     dimmer="blurring"
-                    onClose={this.closeModal}
+                    onClose={closeModal}
                   >
-                    <Modal.Header>
-                      {job.error ? "Error" : "Success"}
-                    </Modal.Header>
-                    <Modal.Content>
-                      {job.error
-                        ? job.message
-                        : "Your job has been posted successfully!"}
-                    </Modal.Content>
+                    <Modal.Header>{jobPost.modalHeader}</Modal.Header>
+                    <Modal.Content>{jobPost.modalContent}</Modal.Content>
                     <Modal.Actions>
-                      <Button onClick={this.closeModal} color="green">
+                      <Button onClick={closeModal} color="green">
                         Confirm
                       </Button>
-                    </Modal.Actions> 
-                  </Modal>*/}
+                    </Modal.Actions>
+                  </Modal>
                 </Form>
                 {errors.length === 0 ? (
                   <Message
@@ -492,7 +491,7 @@ const JobPostPage: React.FC<IProps> = () => {
           </VerticallyPaddedContainer>
         </Container>
       </Segment>
-      {/* <BannerGroup showFeedback /> */}
+      <BannerGroup showFeedback />
       <Footer />
     </Fragment>
   )
