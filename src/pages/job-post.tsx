@@ -137,8 +137,6 @@ const JobPostPage: React.FC<IProps> = () => {
   const locations = useSelector(selectLocations)
   const user = useSelector(selectUser)
 
-  // const delayedValidate = useCallback(throttle(q => sendQuery(q), 500), [])
-
   const customRender = (item: DropdownItemProps) => ({
     color: "green",
     content: item.text,
@@ -183,14 +181,35 @@ const JobPostPage: React.FC<IProps> = () => {
     setPercent(percent)
   }, [errors])
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target
-    setState({ ...state, [name]: value })
+  const setTextInput = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    if (event.target) {
+      setState({ ...state, [event.target.name]: event.target.value })
+    }
   }
 
+  const setTextInputDelayed = useCallback(
+    throttle((e: React.ChangeEvent<HTMLInputElement>) => setTextInput(e), 500),
+    []
+  )
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTextInputDelayed(event)
+  }
+
+  const setTextArea = (event: any) => {
+    if (event && event.target) {
+      const { name, value } = event.target
+      setState({ ...state, [name]: value })
+    }
+  }
+
+  const setTextAreaDelayed = useCallback(
+    throttle((e: any) => setTextArea(e), 750),
+    []
+  )
+
   const handleTextAreaChange = (event: any) => {
-    const { name, value } = event.target
-    setState({ ...state, [name]: value })
+    setTextAreaDelayed(event)
   }
 
   const limit = 10
@@ -219,8 +238,6 @@ const JobPostPage: React.FC<IProps> = () => {
     }
     return ((maxErrors - numErrors) / maxErrors) * 100
   }
-
-  console.log("Rendering")
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -270,11 +287,11 @@ const JobPostPage: React.FC<IProps> = () => {
   const closeModal = (): void => {
     dispatch(reset())
   }
-  // Handles searching for new location lists on type
-  const handleSearchChange = (
+
+  const queryLocations = (
     event: React.SyntheticEvent<HTMLElement, Event>,
     data: DropdownOnSearchChangeData
-  ): void => {
+  ) => {
     const { searchQuery } = data
     const cleanQuery = searchQuery.trim()
     setState({
@@ -284,6 +301,23 @@ const JobPostPage: React.FC<IProps> = () => {
     if (cleanQuery.length >= 2) {
       dispatch(getLocations(`search=${cleanQuery}`))
     }
+  }
+  const queryLocationsDelayed = useCallback(
+    throttle(
+      (
+        event: React.SyntheticEvent<HTMLElement, Event>,
+        data: DropdownOnSearchChangeData
+      ) => queryLocations(event, data),
+      600
+    ),
+    []
+  )
+  // Handles searching for new location lists on type
+  const handleSearchChange = (
+    event: React.SyntheticEvent<HTMLElement, Event>,
+    data: DropdownOnSearchChangeData
+  ): void => {
+    queryLocationsDelayed(event, data)
   }
 
   return (
