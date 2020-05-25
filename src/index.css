@@ -21,3 +21,7 @@ h5,
 h6 {
   font-family: "Nunito", "Public Sans", sans-serif !important;
 }
+
+label {
+  font-weight: 600 !important;
+}
