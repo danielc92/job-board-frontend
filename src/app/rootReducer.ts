@@ -6,6 +6,7 @@ import news from "features/news-list"
 import skills from "features/skills"
 import categories from "features/categories"
 import benefits from "features/benefits"
+import jobPost from "features/job-post"
 import locations from "features/locations"
 import { combineReducers, Action } from "@reduxjs/toolkit"
 import { TOKEN_NAME } from "settings"
@@ -15,6 +16,7 @@ const appReducer = combineReducers({
   benefits,
   categories,
   news,
+  jobPost,
   locations,
   register,
   resetPassword,
