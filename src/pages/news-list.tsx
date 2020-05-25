@@ -20,6 +20,7 @@ import ErrorMessage from "sections/global/ErrorMessage"
 import { dateDiffString } from "utils/date"
 import Navbar from "sections/global/Navbar"
 import Footer from "sections/global/Footer"
+import BannerGroup from "sections/global/BannerGroup"
 
 interface IProps {}
 
@@ -153,7 +154,7 @@ const NewsListPage: React.FC<IProps> = () => {
           </VerticallyPaddedContainer>
         </Container>
       </Segment>
-      {/* <BannerGroup showFeedback /> */}
+      <BannerGroup showFeedback />
       <Footer />
     </div>
   )
