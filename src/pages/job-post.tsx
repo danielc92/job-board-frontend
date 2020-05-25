@@ -53,6 +53,7 @@ import Navbar from "sections/global/Navbar"
 import Footer from "sections/global/Footer"
 import { properCaseTransform } from "utils/general"
 import BannerGroup from "sections/global/BannerGroup"
+import AuthMessage from "sections/global/AuthMessage"
 
 interface IState {
   title: string
@@ -187,14 +188,13 @@ const JobPostPage: React.FC<IProps> = () => {
     }
   }
 
-  const setTextInputDelayed = useCallback(
-    debounce((e: React.ChangeEvent<HTMLInputElement>) => setTextInput(e), 200),
-    []
-  )
+  // const setTextInputDelayed = useCallback(
+  //   debounce((e: React.ChangeEvent<HTMLInputElement>) => setTextInput(e), 200),
+  //   []
+  // )
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTextInputDelayed(event)
-    // setTextInput(event)
+    setTextInput(event)
   }
 
   const setTextArea = (event: any) => {
@@ -205,11 +205,12 @@ const JobPostPage: React.FC<IProps> = () => {
   }
 
   const setTextAreaDelayed = useCallback(
-    throttle((e: any) => setTextArea(e), 200),
+    debounce((e: any) => setTextArea(e), 500),
     []
   )
 
   const handleTextAreaChange = (event: any) => {
+    // setTextArea(event)
     setTextAreaDelayed(event)
   }
 
@@ -304,12 +305,12 @@ const JobPostPage: React.FC<IProps> = () => {
     }
   }
   const queryLocationsDelayed = useCallback(
-    throttle(
+    debounce(
       (
         event: React.SyntheticEvent<HTMLElement, Event>,
         data: DropdownOnSearchChangeData
       ) => queryLocations(event, data),
-      500
+      600
     ),
     []
   )
@@ -332,11 +333,10 @@ const JobPostPage: React.FC<IProps> = () => {
             <Divider />
 
             {!user.user?.is_employer ? (
-              //   <CustomAuthMessage
-              //     header="Invalid member type"
-              //     content="You need to be logged in as an employer to post a job."
-              //   />
-              <p>Not an employer.</p>
+              <AuthMessage
+                header="Invalid member type"
+                content="You need to be logged in as an employer to post a job."
+              />
             ) : (
               <Fragment>
                 <ProgressBar percent={percent} />
