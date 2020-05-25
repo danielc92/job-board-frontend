@@ -12,6 +12,7 @@ interface IApiLocation {
   location_string: string
   postcode: number
   state: string
+  _id: string
 }
 
 interface IStateLocations {
