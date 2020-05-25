@@ -7,6 +7,8 @@ import NewsListPage from "pages/news-list"
 import JobPostPage from "pages/job-post"
 import { useDispatch } from "react-redux"
 import { refresh_token } from "features/account-auth"
+import FeedbackPage from "pages/feedback"
+import NewsArticlePage from "pages/news-article"
 interface IProps {}
 
 const App: React.FC<IProps> = () => {
@@ -20,6 +22,8 @@ const App: React.FC<IProps> = () => {
       <Route exact path="/register" component={RegisterPage} />
       <Route exact path="/news-list" component={NewsListPage} />
       <Route exact path="/create-jobs" component={JobPostPage} />
+      <Route exact path="/provide-feedback" component={FeedbackPage} />
+      <Route path="/news-detail/:slug" exact component={NewsArticlePage} />
     </Fragment>
   )
 }
