@@ -7,6 +7,7 @@ import skills from "features/skills"
 import categories from "features/categories"
 import benefits from "features/benefits"
 import jobPost from "features/job-post"
+import jobList from "features/job-list"
 import feedback from "features/feedback"
 import locations from "features/locations"
 import newsArticle from "features/news-article"
@@ -17,6 +18,7 @@ const appReducer = combineReducers({
   accountAuth,
   benefits,
   categories,
+  jobList,
   news,
   newsArticle,
   jobPost,
