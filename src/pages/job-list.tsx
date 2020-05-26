@@ -26,6 +26,8 @@ import { selectCategories, getCategories } from "features/categories"
 import { selectLocations, getLocations } from "features/locations"
 import { useHistory, useLocation } from "react-router-dom"
 import { debounce } from "lodash"
+import Navbar from "sections/global/Navbar"
+import Footer from "sections/global/Footer"
 
 const { Line, Paragraph } = Placeholder
 
@@ -137,6 +139,7 @@ const JobListPage: React.FC<IProps> = () => {
 
   return (
     <Fragment>
+      <Navbar />
       <Segment basic>
         <Container text>
           <VerticallyPaddedContainer size="3">
@@ -301,6 +304,7 @@ const JobListPage: React.FC<IProps> = () => {
         </Container>
       </Segment>
       <BannerGroup showFeedback />
+      <Footer />
     </Fragment>
   )
 }
