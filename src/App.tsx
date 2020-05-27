@@ -11,6 +11,8 @@ import FeedbackPage from "pages/feedback"
 import NewsArticlePage from "pages/news-article"
 import JobListPage from "pages/job-list"
 import JobArticlePage from "pages/job-article"
+import TermsPage from "pages/terms"
+import PrivacyPage from "pages/privacy"
 interface IProps {}
 
 const App: React.FC<IProps> = () => {
@@ -28,6 +30,16 @@ const App: React.FC<IProps> = () => {
       <Route path="/news-detail/:slug" exact component={NewsArticlePage} />
       <Route exact path="/job-list" component={JobListPage} />
       <Route exact path="/job/:slug" component={JobArticlePage} />
+      <Route
+        exact
+        path="/documentation/terms-and-conditions"
+        component={TermsPage}
+      />
+      <Route
+        exact
+        path="/documentation/privacy-policy"
+        component={PrivacyPage}
+      />
     </Fragment>
   )
 }
