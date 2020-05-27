@@ -167,6 +167,7 @@ const JobArticlePage: React.FC<IProps> = () => {
                       <Form>
                         <Form.Field>
                           <Form.TextArea
+                            rows={8}
                             value={state.user_message}
                             onChange={handleInputChange}
                             name="user_message"
