@@ -19,8 +19,10 @@ const TermsPage: React.FC<IProps> = () => {
   const documentation = useSelector(selectDocumentation)
 
   useEffect(() => {
-    dispatch(getDocumentationList())
-  }, [dispatch])
+    if (!documentation.documentation) {
+      dispatch(getDocumentationList())
+    }
+  }, [dispatch, documentation.documentation])
 
   return (
     <Fragment>
