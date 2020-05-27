@@ -1,18 +1,18 @@
-import todos from "features/example"
 import accountAuth from "features/account-auth"
-import resetPassword from "features/account-reset-request"
-import register from "features/register"
-import news from "features/news-list"
-import skills from "features/skills"
-import categories from "features/categories"
 import benefits from "features/benefits"
-import jobPost from "features/job-post"
-import jobList from "features/job-list"
+import categories from "features/categories"
+import documentation from "features/documentation"
 import feedback from "features/feedback"
 import jobApply from "features/job-application"
-import locations from "features/locations"
 import jobArticle from "features/job-article"
+import jobList from "features/job-list"
+import jobPost from "features/job-post"
+import locations from "features/locations"
+import news from "features/news-list"
 import newsArticle from "features/news-article"
+import register from "features/register"
+import resetPassword from "features/account-reset-request"
+import skills from "features/skills"
 import { combineReducers, Action } from "@reduxjs/toolkit"
 import { TOKEN_NAME } from "settings"
 
@@ -20,18 +20,18 @@ const appReducer = combineReducers({
   accountAuth,
   benefits,
   categories,
-  jobList,
+  documentation,
+  feedback,
+  jobApply,
   jobArticle,
+  jobList,
+  jobPost,
+  locations,
   news,
   newsArticle,
-  jobPost,
-  jobApply,
-  locations,
   register,
   resetPassword,
   skills,
-  feedback,
-  todos,
 })
 
 export const rootReducer = (state: any, action: Action) => {
