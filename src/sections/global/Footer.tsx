@@ -36,7 +36,7 @@ const Footer: React.FC<IProps> = () => {
                 <List link inverted>
                   <List.Item
                     as={Link}
-                    to="/documentation/terms-of-use"
+                    to="/documentation/terms-and-conditions"
                     content="Terms of use"
                   />
                   <List.Item
