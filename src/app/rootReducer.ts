@@ -9,7 +9,9 @@ import benefits from "features/benefits"
 import jobPost from "features/job-post"
 import jobList from "features/job-list"
 import feedback from "features/feedback"
+import jobApply from "features/job-application"
 import locations from "features/locations"
+import jobArticle from "features/job-article"
 import newsArticle from "features/news-article"
 import { combineReducers, Action } from "@reduxjs/toolkit"
 import { TOKEN_NAME } from "settings"
@@ -19,9 +21,11 @@ const appReducer = combineReducers({
   benefits,
   categories,
   jobList,
+  jobArticle,
   news,
   newsArticle,
   jobPost,
+  jobApply,
   locations,
   register,
   resetPassword,
