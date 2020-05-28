@@ -13,6 +13,8 @@ import JobListPage from "pages/job-list"
 import JobArticlePage from "pages/job-article"
 import TermsPage from "pages/terms"
 import PrivacyPage from "pages/privacy"
+import ActivationPage from "pages/activate"
+import ResetPasswordPage from "pages/reset-password"
 interface IProps {}
 
 const App: React.FC<IProps> = () => {
@@ -30,6 +32,8 @@ const App: React.FC<IProps> = () => {
       <Route path="/news-detail/:slug" exact component={NewsArticlePage} />
       <Route exact path="/job-list" component={JobListPage} />
       <Route exact path="/job/:slug" component={JobArticlePage} />
+      <Route exact path="/activate-account" component={ActivationPage} />
+      <Route exact path="/reset-password" component={ResetPasswordPage} />
       <Route
         exact
         path="/documentation/terms-and-conditions"
