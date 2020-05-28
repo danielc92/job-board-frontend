@@ -43,7 +43,7 @@ const NewsArticlePage: React.FC = () => {
               <Header as="h2" content="News Article Page" />
               <Divider />
               <ErrorMessage
-                header="An error has occured"
+                header="An error has occurred"
                 content={newsArticle.error}
               />
             </Fragment>

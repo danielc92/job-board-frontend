@@ -75,7 +75,7 @@ const NewsListPage: React.FC<IProps> = () => {
             <Divider />
             {newsList.error ? (
               <ErrorMessage
-                header="An error occured"
+                header="An error occurred"
                 content={newsList.error}
               />
             ) : newsList.news?.results.docs ? (

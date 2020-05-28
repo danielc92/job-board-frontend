@@ -212,7 +212,7 @@ const JobListPage: React.FC<IProps> = () => {
               <Fragment>
                 <Header as="h1" content="Job listings" />
                 <ErrorMessage
-                  header="An error occured"
+                  header="An error occurred"
                   content="Please try again later."
                 />
               </Fragment>

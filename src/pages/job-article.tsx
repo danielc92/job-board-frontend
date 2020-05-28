@@ -61,7 +61,7 @@ const JobArticlePage: React.FC<IProps> = () => {
               <Fragment>
                 <Header as="h2" content="Job detail page" />
                 <ErrorMessage
-                  header="An error has occured"
+                  header="An error has occurred"
                   content="Sorry, we couldn't find this job."
                 />
               </Fragment>
