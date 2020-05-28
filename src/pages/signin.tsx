@@ -16,8 +16,8 @@ import { loginUser, selectUser } from "features/account-auth"
 import { RouteComponentProps, useHistory } from "react-router-dom"
 import Footer from "sections/global/Footer"
 import {
-  selectResetPassword,
-  resetPassword,
+  selectResetRequest,
+  resetRequest,
   reset,
 } from "features/account-reset-request"
 import Navbar from "sections/global/Navbar"
@@ -48,7 +48,7 @@ const SigninPage: React.FC<IProps> = ({ location, history }) => {
 
   const dispatch = useDispatch()
   const user = useSelector(selectUser)
-  const resetSelector = useSelector(selectResetPassword)
+  const resetSelector = useSelector(selectResetRequest)
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -78,7 +78,7 @@ const SigninPage: React.FC<IProps> = ({ location, history }) => {
   const handleResetPassword = () => {
     const { email } = state
     if (email.length > 0) {
-      dispatch(resetPassword({ email }))
+      dispatch(resetRequest({ email }))
     }
   }
 
@@ -147,7 +147,7 @@ const SigninPage: React.FC<IProps> = ({ location, history }) => {
                       <Message
                         content={user.error}
                         color="red"
-                        header="An error occured"
+                        header="An error occurred"
                       />
                     ) : null}
                     <Form.Button
