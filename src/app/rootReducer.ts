@@ -11,15 +11,19 @@ import locations from "features/locations"
 import news from "features/news-list"
 import newsArticle from "features/news-article"
 import register from "features/register"
-import resetPassword from "features/account-reset-request"
+import resetPassword from "features/account-reset-password"
+import resetRequest from "features/account-reset-request"
+import accountActivation from "features/account-activate"
 import skills from "features/skills"
 import { combineReducers, Action } from "@reduxjs/toolkit"
 import { TOKEN_NAME } from "settings"
 
 const appReducer = combineReducers({
   accountAuth,
+  accountActivation,
   benefits,
   categories,
+  resetPassword,
   documentation,
   feedback,
   jobApply,
@@ -30,7 +34,7 @@ const appReducer = combineReducers({
   news,
   newsArticle,
   register,
-  resetPassword,
+  resetRequest,
   skills,
 })
 
