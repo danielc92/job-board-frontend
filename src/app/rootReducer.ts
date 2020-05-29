@@ -9,11 +9,13 @@ import jobList from "features/job-list"
 import jobPost from "features/job-post"
 import locations from "features/locations"
 import news from "features/news-list"
+import profile from "features/account-profile"
 import newsArticle from "features/news-article"
 import register from "features/register"
 import resetPassword from "features/account-reset-password"
 import resetRequest from "features/account-reset-request"
 import accountActivation from "features/account-activate"
+import profileUpdate from "features/account-update-profile"
 import skills from "features/skills"
 import { combineReducers, Action } from "@reduxjs/toolkit"
 import { TOKEN_NAME } from "settings"
@@ -21,10 +23,12 @@ import { TOKEN_NAME } from "settings"
 const appReducer = combineReducers({
   accountAuth,
   accountActivation,
+  profile,
   benefits,
   categories,
   resetPassword,
   documentation,
+  profileUpdate,
   feedback,
   jobApply,
   jobArticle,
