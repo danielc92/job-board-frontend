@@ -210,8 +210,8 @@ const JobPostPage: React.FC<IProps> = () => {
   )
 
   const handleTextAreaChange = (event: any) => {
-    // setTextArea(event)
-    setTextAreaDelayed(event)
+    setTextArea(event)
+    // setTextAreaDelayed(event)
   }
 
   const limit = 10
