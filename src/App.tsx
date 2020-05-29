@@ -16,6 +16,7 @@ import PrivacyPage from "pages/privacy"
 import ActivationPage from "pages/activate"
 import ResetPasswordPage from "pages/reset-password"
 import ProfileStatsPage from "pages/profile-stats"
+import MyApplicationsPage from "pages/my-applications"
 interface IProps {}
 
 const App: React.FC<IProps> = () => {
@@ -36,6 +37,7 @@ const App: React.FC<IProps> = () => {
       <Route exact path="/activate-account" component={ActivationPage} />
       <Route exact path="/reset-password" component={ResetPasswordPage} />
       <Route exact path="/profile" component={ProfileStatsPage} />
+      <Route exact path="/my-applications" component={MyApplicationsPage} />
       <Route
         exact
         path="/documentation/terms-and-conditions"
