@@ -54,6 +54,7 @@ import Footer from "sections/global/Footer"
 import { properCaseTransform } from "utils/general"
 import BannerGroup from "sections/global/BannerGroup"
 import AuthMessage from "sections/global/AuthMessage"
+import { customRender } from "utils/render"
 
 interface IState {
   title: string
@@ -138,10 +139,7 @@ const JobPostPage: React.FC<IProps> = () => {
   const locations = useSelector(selectLocations)
   const user = useSelector(selectUser)
 
-  const customRender = (item: DropdownItemProps) => ({
-    color: "green",
-    content: item.text,
-  })
+
 
   useEffect(() => {
     const validateForm = () => {

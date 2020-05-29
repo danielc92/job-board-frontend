@@ -1,4 +1,10 @@
-import { Header, Image, Segment, Divider } from "semantic-ui-react"
+import {
+  Header,
+  Image,
+  Segment,
+  Divider,
+  DropdownItemProps,
+} from "semantic-ui-react"
 import React, { Fragment } from "react"
 
 export const contentRenderer = (
@@ -55,3 +61,8 @@ export const documentationRenderer = (data: any, key: string) => {
     </Fragment>
   )
 }
+
+export const customRender = (item: DropdownItemProps) => ({
+  color: "green",
+  content: item.text,
+})
