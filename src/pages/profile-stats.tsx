@@ -20,11 +20,7 @@ import VerticallyPaddedContainer from "sections/global/VerticallyPaddedContainer
 import BannerGroup from "sections/global/BannerGroup"
 import { properCaseTransform, dateDiffString } from "utils/date"
 import ErrorMessage from "sections/global/ErrorMessage"
-import {
-  getProfile,
-  selectProfile,
-  profileSlice,
-} from "features/account-profile"
+import { getProfile, selectProfile } from "features/account-profile"
 import { logoutUser } from "features/account-auth"
 import { useDispatch, useSelector } from "react-redux"
 import Navbar from "sections/global/Navbar"
@@ -38,25 +34,9 @@ import {
   updateProfile,
 } from "features/account-update-profile"
 import { DateValidator } from "utils/validation"
+import Footer from "sections/global/Footer"
 const marginBottom = { marginBottom: "8px" }
 
-interface IExperience {
-  start: string
-  end: string
-  title: string
-  details: string
-  company: string
-  key: string
-}
-
-interface IEducation {
-  school: string
-  start: string
-  end: string
-  gpa: number
-  course: string
-  key: string
-}
 interface IState {
   achievements: string[]
   available: boolean
@@ -200,7 +180,6 @@ const ProfileStatsPage: React.FC = () => {
     precheckAuthBeforeRequest()
 
     const {
-      experience,
       experienceCompany,
       experienceDetails,
       experienceEnd,
@@ -243,7 +222,6 @@ const ProfileStatsPage: React.FC = () => {
     precheckAuthBeforeRequest()
 
     const {
-      education,
       educationCourse,
       educationEnd,
       educationGpa,
@@ -947,6 +925,7 @@ const ProfileStatsPage: React.FC = () => {
         </Container>
       </Segment>
       <BannerGroup showFeedback />
+      <Footer />
     </Fragment>
   )
 }

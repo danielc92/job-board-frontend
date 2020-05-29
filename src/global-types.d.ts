@@ -58,3 +58,21 @@ interface IPayloadLogin {
       createdAt: string
       modifiedAt: string
     }
+
+    interface IExperience {
+      start: string
+      end: string
+      title: string
+      details: string
+      company: string
+      key: string
+    }
+    
+    interface IEducation {
+      school: string
+      start: string
+      end: string
+      gpa: number
+      course: string
+      key: string
+    }

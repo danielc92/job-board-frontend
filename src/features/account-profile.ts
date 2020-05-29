@@ -11,9 +11,8 @@ import { handleAxiosError, getConfig } from "utils/api"
 interface IApiProfile {
   summary: string
   skills: string[]
-  experience: any[]
-  education: any[]
-  achievements: any[]
+  experience: IExperience[]
+  education: IEducation[]
   available: boolean
   phone: string
   user_id: {
