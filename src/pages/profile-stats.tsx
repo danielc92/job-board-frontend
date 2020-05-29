@@ -25,7 +25,7 @@ import { logoutUser } from "features/account-auth"
 import { useDispatch, useSelector } from "react-redux"
 import Navbar from "sections/global/Navbar"
 import { getSkills, selectSkills } from "features/skills"
-import ProfilePlaceholder from "sections/global/profile/ProfilePlaceholder"
+import ProfilePlaceholder from "sections/profile/ProfilePlaceholder"
 import { checkTokenIsValid } from "utils/auth"
 import { SESSION_EXPIRED_MESSAGE } from "settings"
 import { useHistory } from "react-router-dom"
@@ -35,6 +35,7 @@ import {
 } from "features/account-update-profile"
 import { DateValidator } from "utils/validation"
 import Footer from "sections/global/Footer"
+import { customRender } from "utils/render"
 const marginBottom = { marginBottom: "8px" }
 
 interface IState {
@@ -448,7 +449,7 @@ const ProfileStatsPage: React.FC = () => {
                               value: x.name,
                               key: x._id,
                             }))}
-                            // renderLabel={}
+                            renderLabel={customRender}
                             defaultValue={state.skills}
                           ></Form.Dropdown>
                           <Form.Field>
