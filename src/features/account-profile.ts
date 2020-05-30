@@ -44,10 +44,14 @@ const initialState: IStateProfile = {
 
 export const getProfile = createAsyncThunk(
   "profile",
-  async (args: string | void, thunkAPI) => {
+  async (args: { user_id?: string }, thunkAPI) => {
     try {
       const config = getConfig()
-      const response = await api.get(`career-profile`, config)
+      const { user_id } = args
+      const response = await api.get(
+        `career-profile${user_id ? `?user_id=${user_id}` : ""}`,
+        config
+      )
       return response.data
     } catch (error) {
       const value = handleAxiosError(error)
