@@ -18,6 +18,7 @@ import ResetPasswordPage from "pages/reset-password"
 import ProfileStatsPage from "pages/profile-stats"
 import MyApplicationsPage from "pages/my-applications"
 import MyPostingsPage from "pages/my-postings"
+import PostingDetailsPage from "pages/my-posting-details"
 interface IProps {}
 
 const App: React.FC<IProps> = () => {
@@ -40,6 +41,7 @@ const App: React.FC<IProps> = () => {
       <Route exact path="/profile" component={ProfileStatsPage} />
       <Route exact path="/my-applications" component={MyApplicationsPage} />
       <Route exact path="/my-postings" component={MyPostingsPage} />
+      <Route exact path="/my-postings/:job_id" component={PostingDetailsPage} />
       <Route
         exact
         path="/documentation/terms-and-conditions"
