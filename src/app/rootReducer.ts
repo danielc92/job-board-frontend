@@ -10,6 +10,7 @@ import jobPost from "features/job-post"
 import locations from "features/locations"
 import news from "features/news-list"
 import profile from "features/account-profile"
+import applicationUpdate from "features/job-application-update"
 import myApplications from "features/my-applications"
 import newsArticle from "features/news-article"
 import register from "features/register"
@@ -24,6 +25,7 @@ import { TOKEN_NAME } from "settings"
 const appReducer = combineReducers({
   accountAuth,
   myApplications,
+  applicationUpdate,
   accountActivation,
   profile,
   benefits,
