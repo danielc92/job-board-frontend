@@ -3,41 +3,6 @@ import { RootState } from "../app/store"
 import { api } from "api"
 import { handleAxiosError, getConfig } from "utils/api"
 
-interface IMyApplcation {
-  status: string
-  user_message: string
-  rating: number
-  _id: string
-  applicant_id: string
-  job_id: {
-    location: {
-      type: string
-      coordinates: number[]
-    }
-    benefits: string[]
-    skills: string[]
-    requirements: string[]
-    open: true
-    _id: string
-    creator_id: string
-    category: string
-    company_name: string
-    company_summary: string
-    contact_summary: string
-    employment_type: string
-    job_summary: string
-    location_string: string
-    salary_range_high: number
-    salary_range_low: number
-    slug: string
-    title: string
-    createdAt: string
-    updatedAt: string
-  }
-  createdAt: string
-  updatedAt: string
-}
-
 type IApiMyApplications = IPaginatedData<IMyApplcation>
 
 interface IStateMyApplications {
