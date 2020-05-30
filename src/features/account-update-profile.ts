@@ -46,7 +46,7 @@ export const updateProfile = createAsyncThunk(
     try {
       const config = getConfig()
       const response = await api.patch(`career-profile`, args, config)
-      thunkAPI.dispatch(getProfile())
+      thunkAPI.dispatch(getProfile({}))
       return response.data
     } catch (error) {
       const value = handleAxiosError(error)

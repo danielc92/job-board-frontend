@@ -112,7 +112,7 @@ const ProfileStatsPage: React.FC = () => {
   const historySelector = useHistory()
 
   useEffect(() => {
-    dispatch(getProfile())
+    dispatch(getProfile({}))
     if (!skills.skills) {
       dispatch(getSkills())
     }
