@@ -21,12 +21,14 @@ import accountActivation from "features/account-activate"
 import profileUpdate from "features/account-update-profile"
 import jobUpdateStatus from "features/job-status-update"
 import skills from "features/skills"
+import myPostingDetails from "features/my-posting-details"
 import { combineReducers, Action } from "@reduxjs/toolkit"
 import { TOKEN_NAME } from "settings"
 
 const appReducer = combineReducers({
   accountAuth,
   myApplications,
+  myPostingDetails,
   myPostings,
   applicationUpdate,
   accountActivation,
