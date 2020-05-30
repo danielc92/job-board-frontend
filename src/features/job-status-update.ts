@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import { RootState } from "../app/store"
 import { api } from "api"
 import { handleAxiosError, getConfig } from "utils/api"
-import { getMyApplcations } from "./my-applications"
 import { getMyPostings } from "./my-postings"
 
 interface IStateUpdateApplication {

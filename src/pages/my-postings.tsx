@@ -23,7 +23,6 @@ import { useDispatch, useSelector } from "react-redux"
 import { selectMyPostings, getMyPostings } from "features/my-postings"
 import { useLocation, useHistory } from "react-router-dom"
 import VerticallyPaddedContainer from "sections/global/VerticallyPaddedContainer"
-import { updateApplication } from "features/job-application-update"
 import {
   updateJobStatus,
   selectJobStatusUpdate,

@@ -1,10 +1,4 @@
-import React, {
-  Component,
-  Fragment,
-  useState,
-  useEffect,
-  useCallback,
-} from "react"
+import React, { Fragment, useState, useEffect, useCallback } from "react"
 import {
   Segment,
   Modal,
@@ -16,12 +10,9 @@ import {
   Icon,
   Divider,
   DropdownProps,
-  TextAreaProps,
-  DropdownItemProps,
   DropdownOnSearchChangeData,
-  ModalHeader,
 } from "semantic-ui-react"
-import { debounce, throttle } from "lodash"
+import { debounce } from "lodash"
 
 import { checkTokenIsValid } from "utils/auth"
 import {
@@ -139,8 +130,6 @@ const JobPostPage: React.FC<IProps> = () => {
   const locations = useSelector(selectLocations)
   const user = useSelector(selectUser)
 
-
-
   useEffect(() => {
     const validateForm = () => {
       const errors = [
@@ -202,10 +191,10 @@ const JobPostPage: React.FC<IProps> = () => {
     }
   }
 
-  const setTextAreaDelayed = useCallback(
-    debounce((e: any) => setTextArea(e), 500),
-    []
-  )
+  // const setTextAreaDelayed = useCallback(
+  //   debounce((e: any) => setTextArea(e), 500),
+  //   []
+  // )
 
   const handleTextAreaChange = (event: any) => {
     setTextArea(event)

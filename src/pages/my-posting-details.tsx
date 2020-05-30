@@ -7,14 +7,12 @@ import {
   Modal,
   Button,
   Placeholder,
-  Message,
   Header,
   Label,
   Segment,
   Table,
   Container,
   Divider,
-  Item,
 } from "semantic-ui-react"
 import NoResults from "sections/global/NoResults"
 import { dateDiffString, properCaseTransform } from "utils/date"

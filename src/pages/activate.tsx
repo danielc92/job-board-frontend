@@ -1,4 +1,4 @@
-import React, { Component, Fragment, useEffect } from "react"
+import React, { Fragment, useEffect } from "react"
 import {
   Image,
   Segment,

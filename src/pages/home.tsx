@@ -1,6 +1,4 @@
 import React, { Fragment } from "react"
-import { useSelector, useDispatch } from "react-redux"
-import { selectUser } from "features/account-auth"
 import Footer from "sections/global/Footer"
 import Navbar from "sections/global/Navbar"
 import Features from "sections/home/Features"
@@ -10,7 +8,6 @@ import Hero from "sections/home/Hero"
 import { featureData } from "./data"
 
 interface IProps {}
-
 
 const HomePage: React.FC<IProps> = () => {
   return (

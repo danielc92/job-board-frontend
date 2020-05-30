@@ -1,6 +1,5 @@
 import React from "react"
 import { Button, Icon, Image, Message } from "semantic-ui-react"
-import Navbar from "./Navbar"
 
 interface IProps {
   header: string
@@ -9,7 +8,6 @@ interface IProps {
 
 const ErrorMessage: React.FC<IProps> = ({ header, content }) => {
   return (
-  
     <section
       style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >

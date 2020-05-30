@@ -31,14 +31,12 @@ interface IProps {}
 interface IState {
   password: string
   password_confirm: string
-  validationErrors: string[]
 }
 
 const ResetPasswordPage: React.FC<IProps> = () => {
   const [state, setState] = useState<IState>({
     password: "",
     password_confirm: "",
-    validationErrors: [],
   })
   const [validationErrors, setValidationErrors] = useState<string[]>([])
   const resetPassword = useSelector(selectResetPassword)
@@ -70,7 +68,8 @@ const ResetPasswordPage: React.FC<IProps> = () => {
     data: FormProps
   ) => {
     event.preventDefault()
-    const { validationErrors, password } = state
+    const { password } = state
+
     const qs = querystring.parse(locationSelector.search.substring(1))
 
     if (validationErrors.length === 0 && qs.token) {
@@ -126,11 +125,11 @@ const ResetPasswordPage: React.FC<IProps> = () => {
                     </Form.Button>
                   </Form>
 
-                  {state.validationErrors.length > 0 ? (
+                  {validationErrors.length > 0 ? (
                     <Message
                       header="Validation reminder"
                       color="yellow"
-                      list={state.validationErrors}
+                      list={validationErrors}
                     ></Message>
                   ) : null}
                   <Modal open={resetPassword.modal_body.length > 0}>
