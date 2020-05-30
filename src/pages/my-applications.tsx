@@ -213,7 +213,7 @@ const MyApplicationsPage: React.FC<IProps> = () => {
                 Are you sure you want to withdraw from your application?
               </Modal.Content>
               <Modal.Actions>
-                <Button onClick={() => {}} color="green">
+                <Button onClick={handleWithdrawal} color="green">
                   Yes
                 </Button>
                 <Button color="red" onClick={() => setActionModal(false)}>
