@@ -66,6 +66,11 @@ const MyPostingsPage: React.FC<IProps> = () => {
       search: `?${queryString}`,
     })
   }
+  const handleNavigateApplications = (job_id: string) => {
+    historySelector.push({
+      pathname: `/my-postings/${job_id}`,
+    })
+  }
 
   return (
     <Fragment>
@@ -138,9 +143,8 @@ const MyPostingsPage: React.FC<IProps> = () => {
                             <Button
                               content="View applications"
                               color="green"
-                              onClick={
-                                () => {}
-                                //handleNavigateApplications(item._id, item.title)
+                              onClick={() =>
+                                handleNavigateApplications(item._id)
                               }
                             />
                             <Button.Or />
