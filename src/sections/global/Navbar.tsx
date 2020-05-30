@@ -38,7 +38,7 @@ const Navbar: React.FC<IProps> = () => {
           <Menu.Item as={Link} to="/create-jobs" name="Post jobs" />
           <Menu.Item as={Link} to="/news-list" name="news" />
           <Menu.Item as={Link} to="/profile" name="profile" />
-          <Menu.Item as={Link} to="/dashboard" name="dashboard" />
+          <Menu.Item as={Link} to="/my-applications" name="my applications" />
 
           <Menu.Menu position="right">
             <Menu.Item>
