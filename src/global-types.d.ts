@@ -72,6 +72,26 @@ interface IMyPost {
   createdAt: string
 }
 
+interface IMyPostingDetail {
+  status: string
+  user_message: string
+  rating: number
+  _id: string
+  applicant_id: {
+    _id: string
+    email: string
+    first_name: string
+    last_name: string
+  }
+  job_id: {
+    _id: string
+    title: string
+  }
+  createdAt: string
+  updatedAt: string
+  __v: 0
+}
+
 interface IApiJob {
   _id: string
   title: string
