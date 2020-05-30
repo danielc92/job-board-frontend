@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react"
+import React, { Fragment, useEffect, useState } from "react"
 import Navbar from "sections/global/Navbar"
 import Footer from "sections/global/Footer"
 import { useDispatch, useSelector } from "react-redux"
@@ -27,13 +27,21 @@ import { properCaseTransform, dateDiffString } from "utils/date"
 import { useHistory, useLocation } from "react-router-dom"
 import BannerGroup from "sections/global/BannerGroup"
 import VerticallyPaddedContainer from "sections/global/VerticallyPaddedContainer"
+import {
+  updateApplication,
+  reset,
+  selectApplicationUpdate,
+} from "features/job-application-update"
 
 interface IProps {}
 
 const MyApplicationsPage: React.FC<IProps> = () => {
   const dispatch = useDispatch()
+  const selectUpdate = useSelector(selectApplicationUpdate)
   const selectApplications = useSelector(selectMyApplications)
   const locationSelector = useLocation()
+  const [actionModal, setActionModal] = useState<boolean>(false)
+  const [focusItem, setItem] = useState<IMyApplcation | null>(null)
 
   useEffect(() => {
     const { search } = locationSelector
@@ -68,6 +76,17 @@ const MyApplicationsPage: React.FC<IProps> = () => {
     })
   }
 
+  const handleWithdrawal = () => {
+    setActionModal(false)
+    if (focusItem) {
+      dispatch(
+        updateApplication({
+          job_id: focusItem?.job_id._id,
+          status: "withdrawn",
+        })
+      )
+    }
+  }
   return (
     <Fragment>
       <Navbar />
@@ -108,8 +127,9 @@ const MyApplicationsPage: React.FC<IProps> = () => {
                   <Table.Header>
                     <Table.Row>
                       <Table.HeaderCell content="Title" />
+                      <Table.HeaderCell content="Company" />
                       <Table.HeaderCell content="Status" />
-                      <Table.HeaderCell content="Applied" />
+                      <Table.HeaderCell content="Applied on" />
                       <Table.HeaderCell content="Actions" colSpan="2" />
                     </Table.Row>
                   </Table.Header>
@@ -121,15 +141,22 @@ const MyApplicationsPage: React.FC<IProps> = () => {
                           <Table.Row>
                             <Table.Cell>
                               {properCaseTransform(item.job_id.title)}
+                            </Table.Cell>
+                            <Table.Cell>
                               <Label>{item.job_id.company_name}</Label>
                             </Table.Cell>
-                            <Table.Cell>{status}</Table.Cell>
+                            <Table.Cell>
+                              <Label>{status}</Label>
+                            </Table.Cell>
                             <Table.Cell>{dateDiffString(createdAt)}</Table.Cell>
                             <Table.Cell>
                               <Button.Group size="tiny">
                                 <Button
                                   disabled={status !== "pending" ? true : false}
-                                  onClick={() => {}} // handle withdraw
+                                  onClick={() => {
+                                    setItem(item)
+                                    setActionModal(true)
+                                  }}
                                   color="red"
                                   content="Withdraw"
                                 />
@@ -179,15 +206,35 @@ const MyApplicationsPage: React.FC<IProps> = () => {
                 content="Try applying for some jobs to view your applications."
               />
             ) : null}
-            {/* <Modal open={flag && !error} dimmer="blurring" onClose={this.closeModal}>
-        <Modal.Header>Success</Modal.Header>
-        <Modal.Content>You have withdrawn from this job.</Modal.Content>
-        <Modal.Actions>
-          <Button onClick={this.closeModal} color="green">
-            Confirm
-          </Button>
-        </Modal.Actions>
-      </Modal> */}
+
+            <Modal open={actionModal} dimmer="blurring">
+              <Modal.Header>Withdrawal confirmation</Modal.Header>
+              <Modal.Content>
+                Are you sure you want to withdraw from your application?
+              </Modal.Content>
+              <Modal.Actions>
+                <Button onClick={() => {}} color="green">
+                  Yes
+                </Button>
+                <Button color="red" onClick={() => setActionModal(false)}>
+                  No
+                </Button>
+              </Modal.Actions>
+            </Modal>
+
+            <Modal
+              open={selectUpdate.modal_header.length > 0}
+              dimmer="blurring"
+              onClose={() => dispatch(reset())}
+            >
+              <Modal.Header>{selectUpdate.modal_header}</Modal.Header>
+              <Modal.Content>{selectUpdate.modal_body}</Modal.Content>
+              <Modal.Actions>
+                <Button onClick={() => dispatch(reset())} color="green">
+                  Confirm
+                </Button>
+              </Modal.Actions>
+            </Modal>
           </VerticallyPaddedContainer>
         </Container>
       </Segment>
