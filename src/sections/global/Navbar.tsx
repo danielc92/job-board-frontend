@@ -38,8 +38,11 @@ const Navbar: React.FC<IProps> = () => {
           <Menu.Item as={Link} to="/create-jobs" name="Post jobs" />
           <Menu.Item as={Link} to="/news-list" name="news" />
           <Menu.Item as={Link} to="/profile" name="profile" />
-          <Menu.Item as={Link} to="/my-applications" name="my applications" />
-          <Menu.Item as={Link} to="/my-postings" name="my postings" />
+          {user.isAuthenticated && user.user && user.user.is_employer ? (
+            <Menu.Item as={Link} to="/my-postings" name="my postings" />
+          ) : user.isAuthenticated && user.user && !user.user.is_employer ? (
+            <Menu.Item as={Link} to="/my-applications" name="my applications" />
+          ) : null}
 
           <Menu.Menu position="right">
             <Menu.Item>
