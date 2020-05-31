@@ -149,7 +149,6 @@ const PostingDetailsPage: React.FC<IProps> = () => {
 
             {activeApplication.status === "withdrawn" ? (
               <Modal.Content>
-                <p>application is no longer interested</p>
                 <WithdrawnMessage
                   header="Application was withdrawn"
                   content="This applicant is no longer interested in applying for this job."
