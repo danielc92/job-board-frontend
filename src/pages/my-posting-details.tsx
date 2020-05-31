@@ -40,6 +40,15 @@ const PostingDetailsPage: React.FC<IProps> = () => {
   )
 
   useEffect(() => {
+    if (activeApplication) {
+      dispatch(
+        getProfile({
+          user_id: activeApplication.applicant_id._id,
+        })
+      )
+    }
+  }, [activeApplication, dispatch])
+  useEffect(() => {
     const { job_id } = paramSelector
     if (job_id) {
       dispatch(getPostingDetails({ page: "1", job_id }))
@@ -105,15 +114,7 @@ const PostingDetailsPage: React.FC<IProps> = () => {
                             compact
                             onClick={() => {
                               setApplication(item)
-
                               setModal(true)
-                              if (activeApplication) {
-                                dispatch(
-                                  getProfile({
-                                    user_id: activeApplication.applicant_id._id,
-                                  })
-                                )
-                              }
                             }}
                             color="green"
                           >
@@ -150,8 +151,8 @@ const PostingDetailsPage: React.FC<IProps> = () => {
             {activeApplication.status === "withdrawn" ? (
               <Modal.Content>
                 <WithdrawnMessage
-                  header="Application was withdrawn"
-                  content="This applicant is no longer interested in applying for this job."
+                  header="Application withdrawn"
+                  content="This applicant has chosen to withdraw from this job, and is no longer interested."
                 />
               </Modal.Content>
             ) : (
