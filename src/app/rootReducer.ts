@@ -21,6 +21,8 @@ import accountActivation from "features/account-activate"
 import profileUpdate from "features/account-update-profile"
 import jobUpdateStatus from "features/job-status-update"
 import skills from "features/skills"
+import myDetailsUpdate from "features/account-update-details"
+import myDetails from "features/account-details"
 import myPostingDetails from "features/my-posting-details"
 import { combineReducers, Action } from "@reduxjs/toolkit"
 import { TOKEN_NAME } from "settings"
@@ -33,6 +35,8 @@ const appReducer = combineReducers({
   applicationUpdate,
   accountActivation,
   profile,
+  myDetails,
+  myDetailsUpdate,
   jobUpdateStatus,
   benefits,
   categories,
