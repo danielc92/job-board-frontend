@@ -14,8 +14,10 @@ import {
   DropdownProps,
   FormProps,
   DropdownOnSearchChangeData,
+  Modal,
+  Search,
 } from "semantic-ui-react"
-import querystring from "querystring"
+import querystring, { stringify } from "querystring"
 import BannerGroup from "sections/global/BannerGroup"
 import VerticallyPaddedContainer from "sections/global/VerticallyPaddedContainer"
 import { dateDiffString, properCaseTransform } from "utils/date"
@@ -28,6 +30,13 @@ import { useHistory, useLocation } from "react-router-dom"
 import { debounce } from "lodash"
 import Navbar from "sections/global/Navbar"
 import Footer from "sections/global/Footer"
+import { selectDetails, getMyDetails } from "features/account-details"
+import { selectUser } from "features/account-auth"
+import {
+  updateMyDetails,
+  selectMyDetailsUpdate,
+  reset,
+} from "features/account-update-details"
 
 const { Line, Paragraph } = Placeholder
 
@@ -47,6 +56,16 @@ const JobListPage: React.FC<IProps> = () => {
   const locations = useSelector(selectLocations)
   const historySelector = useHistory()
   const locationSelector = useLocation()
+  const detailSelector = useSelector(selectDetails)
+  const userSelector = useSelector(selectUser)
+  const detailUpdateSelector = useSelector(selectMyDetailsUpdate)
+
+  useEffect(() => {
+    if (!detailSelector.myDetails && userSelector.isAuthenticated) {
+      dispatch(getMyDetails())
+    }
+  }, [detailSelector.myDetails, dispatch, userSelector.isAuthenticated])
+
   useEffect(() => {
     if (!categories.categories) {
       dispatch(getCategories())
@@ -56,6 +75,23 @@ const JobListPage: React.FC<IProps> = () => {
     dispatch(getJobList(args))
   }, [categories.categories, dispatch, historySelector, locationSelector])
 
+  const handleSaveJob = (job_id: string) => {
+    if (detailSelector.myDetails) {
+      const exists = detailSelector.myDetails.results.saved_jobs.find(
+        (f) => f === job_id
+      )
+      if (!exists) {
+        dispatch(
+          updateMyDetails({
+            saved_jobs: [
+              ...detailSelector.myDetails.results.saved_jobs,
+              job_id,
+            ],
+          })
+        )
+      }
+    }
+  }
   const handleJobSearch = (
     event: React.FormEvent<HTMLFormElement>,
     data: FormProps
@@ -87,6 +123,43 @@ const JobListPage: React.FC<IProps> = () => {
     historySelector.push({
       pathname: `/job/${slug}`,
     })
+  }
+
+  const saveSearch = () => {
+    const parsed = querystring.parse(locationSelector.search.substring(1))
+
+    let f: {
+      location_string?: string
+      category?: string
+      title?: string
+    } = {}
+
+    if (parsed.location_string) {
+      f.location_string = parsed.location_string as string
+    }
+    if (parsed.category) {
+      f.category = parsed.category as string
+    }
+    if (parsed.title) {
+      f.title = parsed.title as string
+    }
+
+    const processedString = "?" + querystring.stringify(f)
+
+    if (processedString.length > 0 && detailSelector.myDetails) {
+      const exist = detailSelector.myDetails.results.saved_searches.find(
+        (f) => f === processedString
+      )
+      if (!exist)
+        dispatch(
+          updateMyDetails({
+            saved_searches: [
+              ...detailSelector.myDetails.results.saved_searches,
+              processedString,
+            ],
+          })
+        )
+    }
   }
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -135,7 +208,6 @@ const JobListPage: React.FC<IProps> = () => {
   const previousQuery = querystring.parse(
     historySelector.location.search.substring(1)
   )
-  console.log("Previous query", previousQuery)
 
   return (
     <Fragment>
@@ -218,19 +290,31 @@ const JobListPage: React.FC<IProps> = () => {
               </Fragment>
             ) : jobList.jobList?.results ? (
               <Fragment>
-                <Header as="h1" content="Job listings" />
-                <p>
-                  We found {jobList.jobList.results.totalDocs} jobs matching
-                  your search
-                </p>
-
-                <Label.Group>
-                  {Object.entries(previousQuery).map((i) => {
-                    if (i[0] !== "page" && i[1] && i[1].length > 0) {
-                      return <Label size="tiny">{i[1]}</Label>
-                    }
-                  })}
-                </Label.Group>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "flex-end",
+                  }}
+                >
+                  <div>
+                    <Header as="h1" content="Job listings" />
+                    <p>
+                      We found {jobList.jobList.results.totalDocs} jobs matching
+                      your search
+                    </p>
+                    <Label.Group>
+                      {Object.entries(previousQuery).map((i) => {
+                        if (i[0] !== "page" && i[1] && i[1].length > 0) {
+                          return <Label size="tiny">{i[1]}</Label>
+                        }
+                      })}
+                    </Label.Group>
+                  </div>
+                  <Button color="yellow" onClick={saveSearch}>
+                    <Icon name="star"></Icon>Save search
+                  </Button>
+                </div>
 
                 <Divider></Divider>
                 {jobList.jobList.results.docs.map((item, index) => (
@@ -246,6 +330,15 @@ const JobListPage: React.FC<IProps> = () => {
                     >
                       <Icon name="eye"></Icon>View this job
                     </Button>
+
+                    <Button
+                      disabled={!userSelector.isAuthenticated}
+                      color="yellow"
+                      size="tiny"
+                      onClick={() => handleSaveJob(item._id)}
+                    >
+                      <Icon name="star"></Icon>Save this job
+                    </Button>
                     <Divider />
                     <Label.Group>
                       <Label
@@ -253,12 +346,23 @@ const JobListPage: React.FC<IProps> = () => {
                         size="tiny"
                         content={`Posted ${dateDiffString(item.createdAt)}`}
                       />
-                      <Label color="green" basic>
-                        ${item.salary_range_low} - ${item.salary_range_high}
-                      </Label>
-                      <Label color="green" basic>
-                        {item.category}
-                      </Label>
+                      <Label
+                        icon="dollar"
+                        size="tiny"
+                        content={`${item.salary_range_low
+                          .toString()
+                          .replace(
+                            /\B(?=(\d{3})+(?!\d))/g,
+                            ","
+                          )} - ${item.salary_range_high
+                          .toString()
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}
+                      />
+                      <Label
+                        icon="setting"
+                        size="tiny"
+                        content={item.category}
+                      />
                     </Label.Group>
                   </Segment>
                 ))}
@@ -303,6 +407,16 @@ const JobListPage: React.FC<IProps> = () => {
           </VerticallyPaddedContainer>
         </Container>
       </Segment>
+
+      <Modal open={detailUpdateSelector.modal_open}>
+        <Modal.Header>{detailUpdateSelector.modal_header}</Modal.Header>
+        <Modal.Content>{detailUpdateSelector.modal_body}</Modal.Content>
+        <Modal.Actions>
+          <Button onClick={() => dispatch(reset())} color="green">
+            Confirm
+          </Button>
+        </Modal.Actions>
+      </Modal>
       <BannerGroup showFeedback />
       <Footer />
     </Fragment>
