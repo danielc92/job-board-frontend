@@ -361,7 +361,7 @@ const JobListPage: React.FC<IProps> = () => {
                       <Label
                         icon="setting"
                         size="tiny"
-                        content={item.category}
+                        content={properCaseTransform(item.category)}
                       />
                     </Label.Group>
                   </Segment>
