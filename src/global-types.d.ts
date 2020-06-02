@@ -109,6 +109,7 @@ interface IApiJob {
   salary_range_high: number
   open: boolean
   closes: boolean
+  state: string
   location: {
     type: string
     coordinates: number[]
