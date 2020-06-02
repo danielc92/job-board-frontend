@@ -262,11 +262,12 @@ const JobPostPage: React.FC<IProps> = () => {
       (l) => state.location_id === l._id
     )
     if (selectedLocation) {
-      const { location, location_string } = selectedLocation
+      const { location, location_string, state } = selectedLocation
       payload = {
         ...payload,
         location,
         location_string,
+        state,
       }
     }
 
