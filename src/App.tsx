@@ -20,6 +20,7 @@ import MyApplicationsPage from "pages/my-applications"
 import MyPostingsPage from "pages/my-postings"
 import PostingDetailsPage from "pages/my-posting-details"
 import SavedJobsPage from "pages/saved-jobs"
+import FaqPage from "pages/faq"
 interface IProps {}
 
 const App: React.FC<IProps> = () => {
@@ -53,6 +54,11 @@ const App: React.FC<IProps> = () => {
         exact
         path="/documentation/privacy-policy"
         component={PrivacyPage}
+      />
+      <Route
+        exact
+        path="/documentation/frequently-asked-questions-faq"
+        component={FaqPage}
       />
     </Fragment>
   )
