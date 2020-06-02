@@ -92,14 +92,6 @@ const SavedJobsPage: React.FC<IProps> = () => {
                   <Icon name="eye"></Icon>View this job
                 </Button>
 
-                {/* <Button
-                  disabled={!user.isAuthenticated}
-                  color="yellow"
-                  size="tiny"
-                  onClick={() => handleSaveJob(item._id)}
-                >
-                  <Icon name="star"></Icon>Save this job
-                </Button> */}
                 <Divider />
                 <Label.Group>
                   <Label
