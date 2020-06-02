@@ -71,14 +71,14 @@ const JobArticlePage: React.FC<IProps> = () => {
                   {properCaseTransform(jobArticle.job.results.title)}
                 </Header>
                 <Segment padded stacked>
-                  <Header as="h5" content="About the job" />
+                  <Header as="h4" content="About the job" />
                   <p style={marginStyle}>
                     {jobArticle.job.results.job_summary}
                   </p>
                   <Grid stackable>
                     <Grid.Row style={marginStyle}>
                       <Grid.Column width={4}>
-                        <Header as="h5">
+                        <Header as="h4">
                           {/* <Icon name="money bill alternate outline" /> */}
                           <Header.Content>Salary</Header.Content>
                         </Header>
@@ -87,7 +87,7 @@ const JobArticlePage: React.FC<IProps> = () => {
                         </Label>
                       </Grid.Column>
                       <Grid.Column width={4}>
-                        <Header as="h5">
+                        <Header as="h4">
                           <Header.Content>Category</Header.Content>
                         </Header>
                         <Label basic color="green">
@@ -95,7 +95,7 @@ const JobArticlePage: React.FC<IProps> = () => {
                         </Label>
                       </Grid.Column>
                       <Grid.Column width={4}>
-                        <Header as="h5">
+                        <Header as="h4">
                           <Header.Content>Employment Type</Header.Content>
                         </Header>
                         <Label basic color="green">
@@ -103,7 +103,7 @@ const JobArticlePage: React.FC<IProps> = () => {
                         </Label>
                       </Grid.Column>
                       <Grid.Column width={4}>
-                        <Header as="h5">
+                        <Header as="h4">
                           <Header.Content>Location</Header.Content>
                         </Header>
                         <Label
@@ -125,7 +125,7 @@ const JobArticlePage: React.FC<IProps> = () => {
                   <Grid stackable style={{ marginTop: 0 }}>
                     <Grid.Row style={marginStyle}>
                       <Grid.Column width={8}>
-                        <Header as="h5" content="Skills" />
+                        <Header as="h4" content="Skills" />
                         <Label.Group>
                           {jobArticle.job.results.skills.map((item) => (
                             <Label basic color="green">
@@ -135,7 +135,7 @@ const JobArticlePage: React.FC<IProps> = () => {
                         </Label.Group>
                       </Grid.Column>
                       <Grid.Column width={8}>
-                        <Header as="h5" content="Benefits" />
+                        <Header as="h4" content="Benefits" />
                         <Label.Group>
                           {jobArticle.job.results.benefits.map((item) => (
                             <Label basic color="green">
@@ -147,11 +147,11 @@ const JobArticlePage: React.FC<IProps> = () => {
                     </Grid.Row>
                   </Grid>
 
-                  <Header as="h5" content="About the company" />
+                  <Header as="h4" content="About the company" />
                   <p style={marginStyle}>
                     {jobArticle.job.results.company_summary}
                   </p>
-                  <Header as="h5" content="Contact Summary" />
+                  <Header as="h4" content="Contact Summary" />
                   <p style={marginStyle}>
                     {jobArticle.job.results.contact_summary}
                   </p>
