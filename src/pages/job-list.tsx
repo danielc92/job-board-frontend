@@ -15,9 +15,9 @@ import {
   FormProps,
   DropdownOnSearchChangeData,
   Modal,
-  Search,
+
 } from "semantic-ui-react"
-import querystring, { stringify } from "querystring"
+import querystring from "querystring"
 import BannerGroup from "sections/global/BannerGroup"
 import VerticallyPaddedContainer from "sections/global/VerticallyPaddedContainer"
 import { dateDiffString, properCaseTransform } from "utils/date"
@@ -293,6 +293,7 @@ const JobListPage: React.FC<IProps> = () => {
                 <div
                   style={{
                     display: "flex",
+                    flexWrap: "wrap",
                     justifyContent: "space-between",
                     alignItems: "flex-end",
                   }}
@@ -300,8 +301,11 @@ const JobListPage: React.FC<IProps> = () => {
                   <div>
                     <Header as="h1" content="Job listings" />
                     <p>
-                      We found {jobList.jobList.results.totalDocs} jobs matching
-                      your search
+                      We found{" "}
+                      <strong>{jobList.jobList.results.totalDocs}</strong> jobs.{" "}
+                      {!userSelector.isAuthenticated
+                        ? "You need to be logged in to save searches and jobs."
+                        : ""}
                     </p>
                     <Label.Group>
                       {Object.entries(previousQuery).map((i) => {
@@ -311,7 +315,12 @@ const JobListPage: React.FC<IProps> = () => {
                       })}
                     </Label.Group>
                   </div>
-                  <Button color="yellow" onClick={saveSearch}>
+
+                  <Button
+                    disabled={!userSelector.isAuthenticated}
+                    color="yellow"
+                    onClick={saveSearch}
+                  >
                     <Icon name="star"></Icon>Save search
                   </Button>
                 </div>
