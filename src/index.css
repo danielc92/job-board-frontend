@@ -12,7 +12,7 @@ code {
     monospace;
 }
 
-/* Overrides for semantics headers  */
+/* Overrides for semantic react ui  */
 h1,
 h2,
 h3,
@@ -24,4 +24,11 @@ h6 {
 
 label {
   font-weight: 600 !important;
+}
+
+.ui.toggle.checkbox input:checked ~ .box:before,
+.ui.toggle.checkbox input:checked ~ label:before,
+.ui.toggle.checkbox input:focus:checked ~ .box:before,
+.ui.toggle.checkbox input:focus:checked ~ label:before {
+  background-color: #21ba45 !important;
 }
