@@ -18,11 +18,10 @@ import {
   PasswordMatcher,
   EmailValidator,
 } from "utils/validation"
-import { ALLOWED_CHARS_HUMAN_NAME } from "settings"
+import { ALLOWED_CHARS_HUMAN_NAME, ROUTES } from "settings"
 import { selectRegister, reset, registerUser } from "features/register"
 import Footer from "sections/global/Footer"
 import Navbar from "sections/global/Navbar"
-
 interface IProps {}
 
 interface IState {
@@ -108,7 +107,7 @@ const RegisterPage: React.FC<IProps> = () => {
 
   const handleNavigateToLogin = () => {
     dispatch(reset())
-    historySelector.push("/sign-in")
+    historySelector.push(ROUTES.ACCOUNT_SIGNIN)
   }
 
   return (

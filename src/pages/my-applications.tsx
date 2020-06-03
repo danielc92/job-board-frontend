@@ -32,6 +32,7 @@ import {
   reset,
   selectApplicationUpdate,
 } from "features/job-application-update"
+import { ROUTES } from "settings"
 
 interface IProps {}
 
@@ -65,7 +66,7 @@ const MyApplicationsPage: React.FC<IProps> = () => {
 
     let queryString = querystring.stringify(queryObject)
     historySelector.push({
-      pathname: "/my-applications",
+      pathname:ROUTES.JOB_APPLICATIONS,
       search: `?${queryString}`,
     })
   }

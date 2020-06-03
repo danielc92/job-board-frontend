@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from "react"
 import Navbar from "sections/global/Navbar"
 import Footer from "sections/global/Footer"
 import BannerGroup from "sections/global/BannerGroup"
-import querystring from 'querystring'
+import querystring from "querystring"
 import {
   Container,
   Header,
@@ -18,6 +18,7 @@ import ErrorMessage from "sections/global/ErrorMessage"
 import NoResults from "sections/global/NoResults"
 import { useHistory } from "react-router-dom"
 import { selectDetails, getMyDetails } from "features/account-details"
+import { ROUTES } from "settings"
 
 interface IProps {}
 
@@ -72,15 +73,14 @@ const SavedSearchesPage: React.FC<IProps> = () => {
           ) : (
             userDetails.myDetails?.results.saved_searches.map(
               (search, index) => {
-
                 return (
                   <Segment stacked padded key={index.toString()}>
                     <Header as="h2">{search}</Header>
                     <Button
                       onClick={() =>
                         historySelector.push({
-                          pathname: `/job-list`,
-                          search
+                          pathname: ROUTES.JOB_LIST,
+                          search,
                         })
                       }
                     >

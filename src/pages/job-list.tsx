@@ -15,7 +15,6 @@ import {
   FormProps,
   DropdownOnSearchChangeData,
   Modal,
-
 } from "semantic-ui-react"
 import querystring from "querystring"
 import BannerGroup from "sections/global/BannerGroup"
@@ -37,6 +36,7 @@ import {
   selectMyDetailsUpdate,
   reset,
 } from "features/account-update-details"
+import { ROUTES } from "settings"
 
 const { Line, Paragraph } = Placeholder
 
@@ -99,7 +99,7 @@ const JobListPage: React.FC<IProps> = () => {
     event.preventDefault()
 
     historySelector.push(
-      `/job-list?${querystring.stringify({ ...state, page: "1" })}`
+      `${ROUTES.JOB_LIST}?${querystring.stringify({ ...state, page: "1" })}`
     )
   }
 
@@ -114,7 +114,7 @@ const JobListPage: React.FC<IProps> = () => {
 
     let queryString = querystring.stringify(queryObject)
     historySelector.push({
-      pathname: "/job-list",
+      pathname: ROUTES.JOB_LIST,
       search: `?${queryString}`,
     })
   }

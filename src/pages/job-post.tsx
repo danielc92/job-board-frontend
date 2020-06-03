@@ -23,7 +23,7 @@ import {
   StringCharacterValidator,
 } from "utils/validation"
 
-import { SESSION_EXPIRED_MESSAGE, ALLOWED_CHARS_JOB } from "settings"
+import { SESSION_EXPIRED_MESSAGE, ALLOWED_CHARS_JOB, ROUTES } from "settings"
 // import BannerGroup from 'components/banners/BannerGroup'
 import { useDispatch, useSelector } from "react-redux"
 import { getSkills, selectSkills } from "features/skills"
@@ -235,7 +235,7 @@ const JobPostPage: React.FC<IProps> = () => {
     if (!checkTokenIsValid()) {
       dispatch(logoutUser())
       historySelector.push({
-        pathname: "/sign-in",
+        pathname: ROUTES.ACCOUNT_SIGNIN,
         state: { redirect_message: SESSION_EXPIRED_MESSAGE },
       })
       return

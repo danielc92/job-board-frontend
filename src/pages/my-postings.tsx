@@ -28,6 +28,7 @@ import {
   selectJobStatusUpdate,
   reset,
 } from "features/job-status-update"
+import { ROUTES } from "settings"
 
 interface IProps {}
 
@@ -61,7 +62,7 @@ const MyPostingsPage: React.FC<IProps> = () => {
 
     let queryString = querystring.stringify(queryObject)
     historySelector.push({
-      pathname: "/my-postings",
+      pathname: ROUTES.JOB_POSTINGS,
       search: `?${queryString}`,
     })
   }

@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { loginUser, selectUser } from "features/account-auth"
 import { RouteComponentProps, useHistory } from "react-router-dom"
 import Footer from "sections/global/Footer"
+import { ROUTES } from "settings"
 import {
   selectResetRequest,
   resetRequest,
@@ -44,7 +45,7 @@ const SigninPage: React.FC<IProps> = ({ location, history }) => {
     hidePassword: true,
   })
 
-  const historyHook = useHistory()
+  const historySelector = useHistory()
 
   const dispatch = useDispatch()
   const user = useSelector(selectUser)
@@ -84,9 +85,9 @@ const SigninPage: React.FC<IProps> = ({ location, history }) => {
 
   useEffect(() => {
     if (user.isAuthenticated) {
-      historyHook.push("/")
+      historySelector.push(ROUTES.HOME)
     }
-  }, [historyHook, user.isAuthenticated])
+  }, [historySelector, user.isAuthenticated])
 
   const { hidePassword, email, error, password } = state
   return (

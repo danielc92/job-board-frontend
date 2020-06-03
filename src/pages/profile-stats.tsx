@@ -27,7 +27,7 @@ import Navbar from "sections/global/Navbar"
 import { getSkills, selectSkills } from "features/skills"
 import ProfilePlaceholder from "sections/profile/ProfilePlaceholder"
 import { checkTokenIsValid } from "utils/auth"
-import { SESSION_EXPIRED_MESSAGE } from "settings"
+import { SESSION_EXPIRED_MESSAGE, ROUTES } from "settings"
 import { useHistory } from "react-router-dom"
 import {
   selectProfileUpdate,
@@ -124,7 +124,7 @@ const ProfileStatsPage: React.FC = () => {
     if (!checkTokenIsValid()) {
       dispatch(logoutUser())
       historySelector.push({
-        pathname: "/sign-in",
+        pathname: ROUTES.ACCOUNT_SIGNIN,
         state: {
           redirect_message: SESSION_EXPIRED_MESSAGE,
         },

@@ -21,6 +21,7 @@ import { dateDiffString } from "utils/date"
 import Navbar from "sections/global/Navbar"
 import Footer from "sections/global/Footer"
 import BannerGroup from "sections/global/BannerGroup"
+import { ROUTES } from "settings"
 
 interface IProps {}
 
@@ -59,7 +60,7 @@ const NewsListPage: React.FC<IProps> = () => {
 
     let queryString = querystring.stringify(queryObject)
     historySelector.push({
-      pathname: "/news-list",
+      pathname: ROUTES.NEWS_LIST,
       search: `?${queryString}`,
     })
   }
