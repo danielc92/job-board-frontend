@@ -37,21 +37,33 @@ const Navbar: React.FC<IProps> = () => {
           <Menu.Item as={Link} to={ROUTES.HOME} name="Home"></Menu.Item>
 
           <Menu.Item as={Link} to={ROUTES.JOB_LIST} name="Explore jobs" />
-          <Menu.Item as={Link} to={ROUTES.JOB_CREATE} name="Post jobs" />
           <Menu.Item as={Link} to={ROUTES.NEWS_LIST} name="news" />
-          <Menu.Item as={Link} to={ROUTES.PROFILE} name="profile" />
-          <Menu.Item
-            as={Link}
-            to={ROUTES.PROFILE_SAVED_JOBS}
-            name="saved jobs"
-          />
-          <Menu.Item
-            as={Link}
-            to={ROUTES.PROFILE_SAVED_SEARCH}
-            name="saved search"
-          />
+
+          {user.isAuthenticated && user.user ? (
+            <Fragment>
+              <Menu.Item as={Link} to={ROUTES.PROFILE} name="profile" />
+              <Menu.Item
+                as={Link}
+                to={ROUTES.PROFILE_SAVED_JOBS}
+                name="saved jobs"
+              />
+              <Menu.Item
+                as={Link}
+                to={ROUTES.PROFILE_SAVED_SEARCH}
+                name="saved search"
+              />
+            </Fragment>
+          ) : null}
+
           {user.isAuthenticated && user.user && user.user.is_employer ? (
-            <Menu.Item as={Link} to={ROUTES.JOB_POSTINGS} name="my postings" />
+            <Fragment>
+              <Menu.Item as={Link} to={ROUTES.JOB_CREATE} name="Post a job" />
+              <Menu.Item
+                as={Link}
+                to={ROUTES.JOB_POSTINGS}
+                name="my postings"
+              />
+            </Fragment>
           ) : user.isAuthenticated && user.user && !user.user.is_employer ? (
             <Menu.Item
               as={Link}
