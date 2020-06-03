@@ -21,6 +21,8 @@ import MyPostingsPage from "pages/my-postings"
 import PostingDetailsPage from "pages/my-posting-details"
 import SavedJobsPage from "pages/saved-jobs"
 import FaqPage from "pages/faq"
+import SavedSearchesPage from "pages/saved-searches"
+import { ROUTES } from "settings"
 interface IProps {}
 
 const App: React.FC<IProps> = () => {
@@ -29,37 +31,46 @@ const App: React.FC<IProps> = () => {
   dispatch(refresh_token(null))
   return (
     <Fragment>
-      <Route exact path="/" component={HomePage} />
-      <Route exact path="/sign-in" component={SigninPage} />
-      <Route exact path="/register" component={RegisterPage} />
-      <Route exact path="/news-list" component={NewsListPage} />
-      <Route exact path="/create-jobs" component={JobPostPage} />
-      <Route exact path="/provide-feedback" component={FeedbackPage} />
-      <Route path="/news-detail/:slug" exact component={NewsArticlePage} />
-      <Route exact path="/job-list" component={JobListPage} />
-      <Route exact path="/job/:slug" component={JobArticlePage} />
-      <Route exact path="/activate-account" component={ActivationPage} />
-      <Route exact path="/reset-password" component={ResetPasswordPage} />
-      <Route exact path="/profile" component={ProfileStatsPage} />
-      <Route exact path="/my-applications" component={MyApplicationsPage} />
-      <Route exact path="/my-postings" component={MyPostingsPage} />
-      <Route exact path="/saved-jobs" component={SavedJobsPage} />
-      <Route exact path="/my-postings/:job_id" component={PostingDetailsPage} />
+      <Route exact path={ROUTES.HOME} component={HomePage} />
+      <Route exact path={ROUTES.ACCOUNT_SIGNIN} component={SigninPage} />
+      <Route exact path={ROUTES.ACCOUNT_REGISTER} component={RegisterPage} />
+      <Route exact path={ROUTES.NEWS_LIST} component={NewsListPage} />
+      <Route exact path={ROUTES.JOB_CREATE} component={JobPostPage} />
+      <Route exact path={ROUTES.FEEDBACK} component={FeedbackPage} />
+      <Route path={ROUTES.NEWS_ARTICLE} exact component={NewsArticlePage} />
+      <Route exact path={ROUTES.JOB_LIST} component={JobListPage} />
+      <Route exact path={ROUTES.JOB_ARTICLE} component={JobArticlePage} />
+      <Route exact path={ROUTES.ACCOUNT_ACTIVATE} component={ActivationPage} />
       <Route
         exact
-        path="/documentation/terms-and-conditions"
-        component={TermsPage}
+        path={ROUTES.ACCOUNT_RESET_PASSWORD}
+        component={ResetPasswordPage}
+      />
+      <Route exact path={ROUTES.PROFILE} component={ProfileStatsPage} />
+      <Route
+        exact
+        path={ROUTES.JOB_APPLICATIONS}
+        component={MyApplicationsPage}
+      />
+      <Route exact path={ROUTES.JOB_POSTINGS} component={MyPostingsPage} />
+      <Route exact path={ROUTES.PROFILE_SAVED_JOBS} component={SavedJobsPage} />
+      <Route
+        exact
+        path={ROUTES.PROFILE_SAVED_SEARCH}
+        component={SavedSearchesPage}
       />
       <Route
         exact
-        path="/documentation/privacy-policy"
+        path={ROUTES.JOB_POSTING_ARTICLE}
+        component={PostingDetailsPage}
+      />
+      <Route exact path={ROUTES.DOCUMENTATION_TERMS} component={TermsPage} />
+      <Route
+        exact
+        path={ROUTES.DOCUMENTATION_PRIVACY}
         component={PrivacyPage}
       />
-      <Route
-        exact
-        path="/documentation/frequently-asked-questions-faq"
-        component={FaqPage}
-      />
+      <Route exact path={ROUTES.DOCUMENTATION_FAQ} component={FaqPage} />
     </Fragment>
   )
 }
