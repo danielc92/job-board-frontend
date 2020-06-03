@@ -4,6 +4,8 @@ import { selectUser, logoutUser } from "features/account-auth"
 import { useSelector, useDispatch } from "react-redux"
 import { Link, useHistory } from "react-router-dom"
 import ImportantAlert from "./ImportantAlert"
+import { ROUTES } from "settings"
+
 interface IProps {}
 
 const Navbar: React.FC<IProps> = () => {
@@ -12,7 +14,7 @@ const Navbar: React.FC<IProps> = () => {
   const history = useHistory()
   const handleLogout = (): void => {
     dispatch(logoutUser())
-    history.push("/sign-in")
+    history.push(ROUTES.ACCOUNT_SIGNIN)
   }
 
   return (
@@ -32,34 +34,50 @@ const Navbar: React.FC<IProps> = () => {
               src="/logo/logo-cube.svg"
             />
           </Menu.Item>
-          <Menu.Item as={Link} to="/" name="Home"></Menu.Item>
+          <Menu.Item as={Link} to={ROUTES.HOME} name="Home"></Menu.Item>
 
-          <Menu.Item as={Link} to="/job-list" name="Explore jobs" />
-          <Menu.Item as={Link} to="/create-jobs" name="Post jobs" />
-          <Menu.Item as={Link} to="/news-list" name="news" />
-          <Menu.Item as={Link} to="/profile" name="profile" />
+          <Menu.Item as={Link} to={ROUTES.JOB_LIST} name="Explore jobs" />
+          <Menu.Item as={Link} to={ROUTES.JOB_CREATE} name="Post jobs" />
+          <Menu.Item as={Link} to={ROUTES.NEWS_LIST} name="news" />
+          <Menu.Item as={Link} to={ROUTES.PROFILE} name="profile" />
+          <Menu.Item
+            as={Link}
+            to={ROUTES.PROFILE_SAVED_JOBS}
+            name="saved jobs"
+          />
+          <Menu.Item
+            as={Link}
+            to={ROUTES.PROFILE_SAVED_SEARCH}
+            name="saved search"
+          />
           {user.isAuthenticated && user.user && user.user.is_employer ? (
-            <Menu.Item as={Link} to="/my-postings" name="my postings" />
+            <Menu.Item as={Link} to={ROUTES.JOB_POSTINGS} name="my postings" />
           ) : user.isAuthenticated && user.user && !user.user.is_employer ? (
-            <Menu.Item as={Link} to="/my-applications" name="my applications" />
+            <Menu.Item
+              as={Link}
+              to={ROUTES.JOB_APPLICATIONS}
+              name="my applications"
+            />
           ) : null}
 
           <Menu.Menu position="right">
             <Menu.Item>
               <div>
                 {user.isAuthenticated ? (
-                  <Button secondary onClick={handleLogout}>
-                    Logout
-                  </Button>
+                  <Button onClick={handleLogout}>Logout</Button>
                 ) : (
                   <Button.Group>
-                    <Button color="violet" as={Link} to="/sign-in">
+                    <Button color="violet" as={Link} to={ROUTES.ACCOUNT_SIGNIN}>
                       Sign in
                     </Button>
 
                     <Button.Or />
 
-                    <Button as={Link} to="/register" color="green">
+                    <Button
+                      as={Link}
+                      to={ROUTES.ACCOUNT_REGISTER}
+                      color="green"
+                    >
                       Register
                     </Button>
                   </Button.Group>
