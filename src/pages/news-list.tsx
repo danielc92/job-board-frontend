@@ -44,7 +44,7 @@ const NewsListPage: React.FC<IProps> = () => {
 
   const handleViewNewsArticle = (slug: string) => {
     historySelector.push({
-      pathname: `/news-detail/${slug}`,
+      pathname: `/news/${slug}`,
     })
   }
 
