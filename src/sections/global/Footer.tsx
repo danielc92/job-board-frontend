@@ -1,7 +1,7 @@
 import React, { Fragment } from "react"
 import { Container, Segment, Grid, List, Header } from "semantic-ui-react"
 import { Link } from "react-router-dom"
-
+import { ROUTES } from "settings"
 interface IProps {}
 
 const Footer: React.FC<IProps> = () => {
@@ -18,17 +18,23 @@ const Footer: React.FC<IProps> = () => {
               <Grid.Column width={4}>
                 <Header inverted as="h4" content="Navigation" />
                 <List link inverted>
-                  <List.Item as={Link} to="/" content="Home" />
-                  <List.Item as={Link} to="/job-list" content="Find a job" />
+                  <List.Item as={Link} to={ROUTES.HOME} content="Home" />
                   <List.Item
                     as={Link}
-                    to="/create-jobs"
-                    content="Post a job (employer only)"
+                    to={ROUTES.JOB_LIST}
+                    content="Explore jobs"
                   />
-                  <List.Item as={Link} to="/dashboard" content="Dashboard" />
-                  <List.Item as={Link} to="/news-list" content="News" />
-                  <List.Item as={Link} to="/sign-in" content="Sign in" />
-                  <List.Item as={Link} to="/register" content="Register" />
+                  <List.Item as={Link} to={ROUTES.NEWS_LIST} content="News" />
+                  <List.Item
+                    as={Link}
+                    to={ROUTES.ACCOUNT_SIGNIN}
+                    content="Sign in"
+                  />
+                  <List.Item
+                    as={Link}
+                    to={ROUTES.ACCOUNT_REGISTER}
+                    content="Register"
+                  />
                 </List>
               </Grid.Column>
               <Grid.Column width={4}>
@@ -36,17 +42,17 @@ const Footer: React.FC<IProps> = () => {
                 <List link inverted>
                   <List.Item
                     as={Link}
-                    to="/documentation/terms-and-conditions"
+                    to={ROUTES.DOCUMENTATION_TERMS}
                     content="Terms of use"
                   />
                   <List.Item
                     as={Link}
-                    to="/documentation/privacy-policy"
+                    to={ROUTES.DOCUMENTATION_PRIVACY}
                     content="Privacy policy"
                   />
                   <List.Item
                     as={Link}
-                    to="/documentation/frequently-asked-questions-faq"
+                    to={ROUTES.DOCUMENTATION_FAQ}
                     content="FAQ"
                   />
                 </List>
@@ -54,7 +60,7 @@ const Footer: React.FC<IProps> = () => {
               <Grid.Column width={4}>
                 <Header inverted as="h4" content="Contact" />
                 <List link inverted>
-                  <List.Item as={Link} to="/provide-feedback">
+                  <List.Item as={Link} to={ROUTES.FEEDBACK}>
                     Send feedback
                   </List.Item>
                 </List>
