@@ -10,6 +10,8 @@ import {
   Placeholder,
   Divider,
   Button,
+  Label,
+  Modal,
 } from "semantic-ui-react"
 import VerticallyPaddedContainer from "sections/global/VerticallyPaddedContainer"
 import { useSelector, useDispatch } from "react-redux"
@@ -19,12 +21,18 @@ import NoResults from "sections/global/NoResults"
 import { useHistory } from "react-router-dom"
 import { selectDetails, getMyDetails } from "features/account-details"
 import { ROUTES } from "settings"
+import {
+  updateMyDetails,
+  selectMyDetailsUpdate,
+  reset,
+} from "features/account-update-details"
 
 interface IProps {}
 
 const SavedSearchesPage: React.FC<IProps> = () => {
   const user = useSelector(selectUser)
   const userDetails = useSelector(selectDetails)
+  const userDetailsUpdate = useSelector(selectMyDetailsUpdate)
   const dispatch = useDispatch()
   const historySelector = useHistory()
 
@@ -33,6 +41,16 @@ const SavedSearchesPage: React.FC<IProps> = () => {
       dispatch(getMyDetails())
     }
   }, [dispatch, user.isAuthenticated])
+
+  const deleteSearch = (search: string) => {
+    const { myDetails } = userDetails
+    if (myDetails) {
+      const newSearches = myDetails.results.saved_searches.filter(
+        (x) => x !== search
+      )
+      dispatch(updateMyDetails({ saved_searches: newSearches }))
+    }
+  }
 
   return (
     <Fragment>
@@ -73,10 +91,22 @@ const SavedSearchesPage: React.FC<IProps> = () => {
           ) : (
             userDetails.myDetails?.results.saved_searches.map(
               (search, index) => {
+                const tags = querystring.parse(search.substring(1))
                 return (
                   <Segment stacked padded key={index.toString()}>
-                    <Header as="h2">{search}</Header>
+                    <div style={{ marginBottom: "12px" }}>
+                      {tags.title && <Label>Keywords: {tags.title}</Label>}
+                      {tags.location_string && (
+                        <Label>Where: {tags.location_string}</Label>
+                      )}
+                      {tags.category && (
+                        <Label>Category: {tags.category}</Label>
+                      )}
+                    </div>
+
                     <Button
+                      size="mini"
+                      color="green"
                       onClick={() =>
                         historySelector.push({
                           pathname: ROUTES.JOB_LIST,
@@ -84,7 +114,14 @@ const SavedSearchesPage: React.FC<IProps> = () => {
                         })
                       }
                     >
-                      View this search
+                      View search
+                    </Button>
+                    <Button
+                      size="mini"
+                      color="red"
+                      onClick={() => deleteSearch(search)}
+                    >
+                      Remove search
                     </Button>
                   </Segment>
                 )
@@ -93,6 +130,22 @@ const SavedSearchesPage: React.FC<IProps> = () => {
           )}
         </VerticallyPaddedContainer>
       </Container>
+
+      <Modal open={userDetailsUpdate.modal_header.length > 0}>
+        <Modal.Header>{userDetailsUpdate.modal_header}</Modal.Header>
+        <Modal.Content>{userDetailsUpdate.modal_body}</Modal.Content>
+
+        <Modal.Actions>
+          <Button
+            loading={userDetailsUpdate.isFetching}
+            onClick={() => dispatch(reset())}
+            color="green"
+          >
+            Ok
+          </Button>
+        </Modal.Actions>
+      </Modal>
+
       <BannerGroup showFeedback />
       <Footer />
     </Fragment>
