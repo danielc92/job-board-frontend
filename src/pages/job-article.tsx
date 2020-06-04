@@ -21,6 +21,7 @@ import { properCaseTransform } from "utils/date"
 import { selectApplyForJob, applyForJob, reset } from "features/job-application"
 import JobArticlePlaceholder from "sections/job-article/Placeholder"
 import UnavailableJob from "sections/job-article/UnavailableJob"
+import { selectUser } from "features/account-auth"
 
 interface IProps {}
 
@@ -32,6 +33,7 @@ const JobArticlePage: React.FC<IProps> = () => {
   const [state, setState] = useState<{ user_message: string }>({
     user_message: "",
   })
+  const user = useSelector(selectUser)
   const jobApply = useSelector(selectApplyForJob)
   const jobArticle = useSelector(selectJobArticle)
   const paramSelector = useParams<{ slug: string }>()
@@ -174,16 +176,22 @@ const JobArticlePage: React.FC<IProps> = () => {
                             placeholder="Some words about why you're suitable for this job."
                             label={`Enter a message for the employer (${
                               charLimit - state.user_message.length
-                            } remaining).`}
+                            } chars remaining).`}
                           />
                         </Form.Field>
                         <Form.Field>
                           <Form.Button
+                            disabled={!user.isAuthenticated}
                             onClick={() => apply()}
                             content="Apply for this job"
                             color="green"
                             icon="paper plane"
                           />
+                          {!user.isAuthenticated && (
+                            <p>
+                              You need to be logged in as a job seeker to apply.
+                            </p>
+                          )}
                         </Form.Field>
                       </Form>
                     </Segment>
