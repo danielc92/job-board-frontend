@@ -21,7 +21,6 @@ const NODES = {
 }
 
 const spaceBottom = { marginBottom: "24px" }
-
 export const contentRenderer = (
   data: { node: string; value: string | Array<string> }[]
 ) => {
@@ -59,15 +58,6 @@ export const contentRenderer = (
 
   return items
 }
-
-//     if (c.node === "unordered-list") {
-//       const listItems = (c as any).value.map((li: string) => <li>{li}</li>)
-//       return <ul style={{ marginBottom: "24px" }}>{listItems}</ul>
-//     }
-//     if (c.node === "ordered-list") {
-//       const listItems = (c as any).value.map((li: string) => <li>{li}</li>)
-//       return <ol style={{ marginBottom: "24px" }}>{listItems}</ol>
-//     }
 
 export const documentationRenderer = (data: any, key: string) => {
   if (!data) return null
