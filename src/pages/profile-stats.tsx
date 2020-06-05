@@ -36,6 +36,8 @@ import {
 import { DateValidator } from "utils/validation"
 import Footer from "sections/global/Footer"
 import { customRender } from "utils/render"
+import { DateInput } from "semantic-ui-calendar-react"
+
 const marginBottom = { marginBottom: "8px" }
 
 interface IState {
@@ -316,6 +318,7 @@ const ProfileStatsPage: React.FC = () => {
   return (
     <Fragment>
       <Navbar />
+
       <Segment basic>
         <Container text>
           <VerticallyPaddedContainer size="4">
@@ -649,28 +652,40 @@ const ProfileStatsPage: React.FC = () => {
                                   })
                                 }
                               />
-                              <Form.Input
-                                maxLength={10}
-                                label="Start Date"
-                                value={state.experienceStart}
-                                onChange={(e) =>
-                                  setState({
-                                    ...state,
-                                    experienceStart: e.target.value,
-                                  })
-                                }
-                              />
-                              <Form.Input
-                                maxLength={10}
-                                label="End Date"
-                                value={state.experienceEnd}
-                                onChange={(e) =>
-                                  setState({
-                                    ...state,
-                                    experienceEnd: e.target.value,
-                                  })
-                                }
-                              />
+                              <Form.Field>
+                                <label>Start Date</label>
+                                <DateInput
+                                  closable
+                                  dateFormat="D/M/YYYY"
+                                  value={state.experienceStart}
+                                  onChange={(
+                                    e: React.SyntheticEvent<HTMLElement, Event>,
+                                    data: any
+                                  ) => {
+                                    setState({
+                                      ...state,
+                                      experienceStart: data.value,
+                                    })
+                                  }}
+                                />
+                              </Form.Field>
+                              <Form.Field>
+                                <label>End Date</label>
+                                <DateInput
+                                  closable
+                                  dateFormat="D/M/YYYY"
+                                  value={state.experienceEnd}
+                                  onChange={(
+                                    e: React.SyntheticEvent<HTMLElement, Event>,
+                                    data: any
+                                  ) => {
+                                    setState({
+                                      ...state,
+                                      experienceEnd: data.value,
+                                    })
+                                  }}
+                                />
+                              </Form.Field>
                               <Form.TextArea
                                 label="Additional Details"
                                 placeholder="Achievements and/or highlights"
@@ -786,6 +801,8 @@ const ProfileStatsPage: React.FC = () => {
                                   })
                                 }
                               />
+                            </Form.Field>
+                            <Form.Field>
                               <Form.Input
                                 label="Course"
                                 maxLength={50}
@@ -797,28 +814,42 @@ const ProfileStatsPage: React.FC = () => {
                                   })
                                 }
                               />
-                              <Form.Input
-                                maxLength={10}
-                                label="Start Date"
+                            </Form.Field>
+                            <Form.Field>
+                              <label>Start Date</label>
+                              <DateInput
+                                closable
+                                dateFormat="D/M/YYYY"
                                 value={state.educationStart}
-                                onChange={(e) =>
+                                onChange={(
+                                  e: React.SyntheticEvent<HTMLElement, Event>,
+                                  data: any
+                                ) => {
                                   setState({
                                     ...state,
-                                    educationStart: e.target.value,
+                                    educationStart: data.value,
                                   })
-                                }
+                                }}
                               />
-                              <Form.Input
-                                maxLength={10}
-                                label="End Date"
+                            </Form.Field>
+                            <Form.Field>
+                              <label>End Date</label>
+                              <DateInput
+                                closable
+                                dateFormat="D/M/YYYY"
                                 value={state.educationEnd}
-                                onChange={(e) =>
+                                onChange={(
+                                  e: React.SyntheticEvent<HTMLElement, Event>,
+                                  data: any
+                                ) => {
                                   setState({
                                     ...state,
-                                    educationEnd: e.target.value,
+                                    educationEnd: data.value,
                                   })
-                                }
+                                }}
                               />
+                            </Form.Field>
+                            <Form.Field>
                               <Form.Input
                                 type="number"
                                 label="Grade/GPA"
