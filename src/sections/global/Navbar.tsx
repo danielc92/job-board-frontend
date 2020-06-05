@@ -79,7 +79,7 @@ const Navbar: React.FC<IProps> = () => {
                   <Button onClick={handleLogout}>Logout</Button>
                 ) : (
                   <Button.Group>
-                    <Button color="violet" as={Link} to={ROUTES.ACCOUNT_SIGNIN}>
+                    <Button color="green" as={Link} to={ROUTES.ACCOUNT_SIGNIN}>
                       Sign in
                     </Button>
 
@@ -88,7 +88,7 @@ const Navbar: React.FC<IProps> = () => {
                     <Button
                       as={Link}
                       to={ROUTES.ACCOUNT_REGISTER}
-                      color="green"
+                      color="violet"
                     >
                       Register
                     </Button>

@@ -39,7 +39,7 @@ const Banner: React.FC<IProps> = ({
                     content={ctaHeader}
                   />
                   <p style={{ fontSize: "1.4rem" }}>{ctaSubHeader}</p>
-                  <Button to="/job-list" as={Link} size="huge" color="violet">
+                  <Button to="/job-list" as={Link} size="huge" color="green">
                     <Icon name="paper plane"></Icon>
                     {buttonText}
                   </Button>

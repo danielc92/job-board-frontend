@@ -46,8 +46,8 @@ const SavedJobsPage: React.FC<IProps> = () => {
       <Navbar />
       <Container text>
         <VerticallyPaddedContainer size="4">
-          <Header as="h1" content="Saved Jobs Page" />
-          <p>View all of your saved jobs here.</p>
+          <Header as="h1" content="Saved Jobs" />
+          <p>View all of your saved jobs.</p>
           <Divider />
 
           {savedJobs.isFetching ? (

@@ -225,7 +225,7 @@ const JobListPage: React.FC<IProps> = () => {
                   maxLength={30}
                   name="title"
                   onChange={handleInputChange}
-                  placeholder="Enter some keywords..."
+                  placeholder="Search job title"
                   value={state.title}
                 />
 

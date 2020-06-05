@@ -57,7 +57,7 @@ const SavedSearchesPage: React.FC<IProps> = () => {
       <Navbar />
       <Container text>
         <VerticallyPaddedContainer size="4">
-          <Header as="h1" content="Saved Searches Page" />
+          <Header as="h1" content="Saved Searches" />
           <p>View all of your saved searches.</p>
           <Divider />
 

@@ -101,12 +101,7 @@ const NewsListPage: React.FC<IProps> = () => {
                         size="tiny"
                         content={`Posted ${dateDiffString(item.createdAt)}`}
                       />
-                      <Label
-                        icon="tag"
-                        color="violet"
-                        size="tiny"
-                        content={item.category}
-                      />
+                      <Label icon="tag" size="tiny" content={item.category} />
                     </Label.Group>
                   </Segment>
                 ))}

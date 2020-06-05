@@ -353,8 +353,6 @@ const ProfileStatsPage: React.FC = () => {
                         )}
                         <Header content="Member Type" as="h5" />
                         <Label
-                          color="violet"
-                          basic
                           content={
                             profile.profile.results.user_id.is_employer
                               ? "employer"
