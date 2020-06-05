@@ -25,12 +25,17 @@ import SavedSearchesPage from "pages/saved-searches"
 import { ROUTES } from "settings"
 interface IProps {}
 
+const ScrollToTop: React.FC = () => {
+  window.scrollTo(0, 0)
+  return null
+}
 const App: React.FC<IProps> = () => {
   // Refresh Authenticated everytime user refreshes browser.
   const dispatch = useDispatch()
   dispatch(refresh_token(null))
   return (
     <Fragment>
+      <Route component={ScrollToTop} />
       <Route exact path={ROUTES.HOME} component={HomePage} />
       <Route exact path={ROUTES.ACCOUNT_SIGNIN} component={SigninPage} />
       <Route exact path={ROUTES.ACCOUNT_REGISTER} component={RegisterPage} />
