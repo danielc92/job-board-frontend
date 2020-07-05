@@ -20,6 +20,7 @@ import ErrorMessage from "sections/global/ErrorMessage"
 import NoResults from "sections/global/NoResults"
 import { properCaseTransform, dateDiffString } from "utils/date"
 import { useHistory } from "react-router-dom"
+import { renderQuillRichText } from "utils/render"
 
 interface IProps {}
 
@@ -82,7 +83,11 @@ const SavedJobsPage: React.FC<IProps> = () => {
               <Segment stacked padded key={item._id}>
                 <Header as="h3" content={properCaseTransform(item.title)} />
 
-                <p>{item.job_summary}</p>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: renderQuillRichText(item.job_preview),
+                  }}
+                />
 
                 <Button
                   color="green"
