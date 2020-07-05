@@ -23,16 +23,23 @@ import JobArticlePlaceholder from "sections/job-article/Placeholder"
 import UnavailableJob from "sections/job-article/UnavailableJob"
 import { selectUser } from "features/account-auth"
 import { renderQuillRichText } from "utils/render"
+import ReactQuill from "react-quill"
+import { QUILL_SETTINGS } from "settings"
+import { GLOBAL_TEXT_LIMITS } from "utils/validation"
 
 interface IProps {}
 
+interface IState {
+  user_message: string
+  user_message_count: number
+}
 const marginStyle = { marginBottom: "24px" }
-const charLimit = 1000
 
 const JobArticlePage: React.FC<IProps> = () => {
   const dispatch = useDispatch()
-  const [state, setState] = useState<{ user_message: string }>({
+  const [state, setState] = useState<IState>({
     user_message: "",
+    user_message_count: 0,
   })
   const user = useSelector(selectUser)
   const jobApply = useSelector(selectApplyForJob)
@@ -184,20 +191,38 @@ const JobArticlePage: React.FC<IProps> = () => {
                     <Segment stacked padded>
                       <Form>
                         <Form.Field>
-                          <Form.TextArea
-                            rows={8}
+                          <label>
+                            {GLOBAL_TEXT_LIMITS.APPLICATION_COVER_LETTER -
+                              state.user_message_count}{" "}
+                            chars remaining
+                          </label>
+                          <ReactQuill
                             value={state.user_message}
-                            onChange={handleInputChange}
-                            name="user_message"
-                            placeholder="Some words about why you're suitable for this job."
-                            label={`Enter a message for the employer (${
-                              charLimit - state.user_message.length
-                            } chars remaining).`}
+                            modules={QUILL_SETTINGS.MODULES}
+                            formats={QUILL_SETTINGS.FORMATS}
+                            placeholder="Start writing your cover letter here..."
+                            onChange={(
+                              user_message,
+                              delta,
+                              sources,
+                              methods
+                            ) => {
+                              const user_message_count = methods.getLength()
+                              setState({
+                                ...state,
+                                user_message,
+                                user_message_count,
+                              })
+                            }}
                           />
                         </Form.Field>
                         <Form.Field>
                           <Form.Button
-                            disabled={!user.isAuthenticated}
+                            disabled={
+                              !user.isAuthenticated ||
+                              state.user_message_count >
+                                GLOBAL_TEXT_LIMITS.APPLICATION_COVER_LETTER
+                            }
                             onClick={() => apply()}
                             content="Apply for this job"
                             color="green"
