@@ -29,6 +29,7 @@ import {
   reset,
 } from "features/job-status-update"
 import { ROUTES } from "settings"
+import { renderQuillRichText } from "utils/render"
 
 interface IProps {}
 
@@ -123,11 +124,13 @@ const MyPostingsPage: React.FC<IProps> = () => {
                           <Header>
                             <Header.Content>
                               {properCaseTransform(item.title)}
-                              <Header.Subheader>
-                                {item.job_summary.substring(0, 50)}
-                              </Header.Subheader>
                             </Header.Content>
                           </Header>
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: renderQuillRichText(item.job_preview),
+                            }}
+                          />
                         </Table.Cell>
                         <Table.Cell
                           negative={item.open ? false : true}
