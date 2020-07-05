@@ -45,7 +45,7 @@ const Navbar: React.FC<IProps> = () => {
           <Menu.Item as={Link} to={ROUTES.JOB_LIST} name="Explore jobs" />
           <Menu.Item as={Link} to={ROUTES.NEWS_LIST} name="news" />
 
-          <Dropdown item text="More" pointing>
+          <Dropdown item text="More" pointing icon="angle down">
             <Dropdown.Menu>
               <DropdownDivider style={{ marginTop: 0 }} />
               <Dropdown.Item
@@ -64,7 +64,7 @@ const Navbar: React.FC<IProps> = () => {
           </Dropdown>
 
           {user.isAuthenticated && user.user && (
-            <Dropdown item text={user.user.email} pointing>
+            <Dropdown item text={user.user.email} pointing icon="angle down">
               <Dropdown.Menu>
                 {user.isAuthenticated && user.user && user.user.is_employer ? (
                   <Fragment>
