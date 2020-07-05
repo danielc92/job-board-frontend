@@ -332,6 +332,7 @@ const JobListPage: React.FC<IProps> = () => {
                     <Header as="h3" content={properCaseTransform(item.title)} />
 
                     <div
+                      style={{ marginBottom: "24px" }}
                       dangerouslySetInnerHTML={{
                         __html: renderQuillRichText(item.job_preview),
                       }}
