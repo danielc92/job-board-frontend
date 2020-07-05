@@ -26,6 +26,7 @@ import {
 import WithdrawnMessage from "sections/global/WithdrawnMessage"
 import { updateApplication } from "features/job-application-update"
 import { getProfile, selectProfile } from "features/account-profile"
+import { renderQuillRichText } from "utils/render"
 
 interface IProps {}
 
@@ -160,11 +161,18 @@ const PostingDetailsPage: React.FC<IProps> = () => {
                 <Header as="h3" content="Current status" />
                 <Label content={activeApplication.status} />
                 <Header as="h3" content="Message" />
-                <p>
-                  {activeApplication.user_message.length > 0
-                    ? activeApplication.user_message
-                    : "This applicant did not choose to a leave a message."}
-                </p>
+
+                {activeApplication.user_message.length > 0 ? (
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: renderQuillRichText(
+                        activeApplication.user_message
+                      ),
+                    }}
+                  />
+                ) : (
+                  <p>This applicant did not choose to a leave a message.</p>
+                )}
               </Modal.Content>
             )}
 
