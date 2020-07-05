@@ -1,3 +1,10 @@
+export const GLOBAL_TEXT_LIMITS = {
+  POST_CONTACT_SUMMARY: 500,
+  POST_JOB_SUMMARY: 2000,
+  POST_COMPANY_SUMMARY: 2000,
+  POST_JOB_PREVIEW: 250,
+}
+
 export const ListValidator = (
   list: string[],
   minItems: number,
@@ -111,6 +118,21 @@ export const StringValidator = (
   return errors
 }
 
+export const CharacterNumberValidator = (
+  number: number,
+  minLength: number,
+  maxLength: number,
+  tag: string
+) => {
+  let errors: string[] = []
+  if (number > maxLength || number < minLength) {
+    errors.push(
+      `${tag} must be between ${minLength} and ${maxLength} characters long.`
+    )
+    return errors
+  }
+  return errors
+}
 export const StringCharacterValidator = (
   string: string,
   allowedChars: string,
