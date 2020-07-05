@@ -120,7 +120,7 @@ const MyPostingsPage: React.FC<IProps> = () => {
                   <Table.Body>
                     {myPostings.myPostings?.results.docs.map((item) => (
                       <Table.Row>
-                        <Table.Cell>
+                        <Table.Cell style={{ width: "35vw" }}>
                           <Header>
                             <Header.Content>
                               {properCaseTransform(item.title)}
