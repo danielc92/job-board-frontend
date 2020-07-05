@@ -13,6 +13,8 @@ import {
   DropdownOnSearchChangeData,
 } from "semantic-ui-react"
 import { debounce } from "lodash"
+import ReactQuill from "react-quill"
+import "react-quill/dist/quill.snow.css"
 
 import { checkTokenIsValid } from "utils/auth"
 import {
@@ -21,9 +23,16 @@ import {
   SalaryRangeValidator,
   ListValidator,
   StringCharacterValidator,
+  GLOBAL_TEXT_LIMITS,
+  CharacterNumberValidator,
 } from "utils/validation"
 
-import { SESSION_EXPIRED_MESSAGE, ALLOWED_CHARS_JOB, ROUTES } from "settings"
+import {
+  SESSION_EXPIRED_MESSAGE,
+  ALLOWED_CHARS_JOB,
+  ROUTES,
+  QUILL_SETTINGS,
+} from "settings"
 // import BannerGroup from 'components/banners/BannerGroup'
 import { useDispatch, useSelector } from "react-redux"
 import { getSkills, selectSkills } from "features/skills"
@@ -66,6 +75,12 @@ interface IState {
     type: string
   }
   location_string: string
+
+  company_summary_chars: number
+  job_summary_chars: number
+  contact_summary_chars: number
+  job_preview_chars: number
+  job_preview: string
 }
 const initialState: IState = {
   location_id: "",
@@ -75,6 +90,7 @@ const initialState: IState = {
   benefits: [],
   company_summary: "",
   job_summary: "",
+  job_preview: "",
   company_name: "",
   contact_summary: "",
   salary_range_low: "",
@@ -86,6 +102,11 @@ const initialState: IState = {
   },
   location_string: "",
   searchQuery: "",
+
+  company_summary_chars: 0,
+  job_summary_chars: 0,
+  job_preview_chars: 0,
+  contact_summary_chars: 0,
 }
 
 const employment_types = [
@@ -133,13 +154,23 @@ const JobPostPage: React.FC<IProps> = () => {
   useEffect(() => {
     const validateForm = () => {
       const errors = [
-        ...StringValidator(state.company_summary, 1, 500, "Company summary"),
-        ...StringValidator(state.job_summary, 1, 500, "Job summary"),
-        ...StringValidator(
-          state.contact_summary,
+        ...CharacterNumberValidator(
+          state.contact_summary_chars,
           1,
-          500,
-          "Contact information"
+          GLOBAL_TEXT_LIMITS.POST_CONTACT_SUMMARY,
+          "Contact summary"
+        ),
+        ...CharacterNumberValidator(
+          state.job_summary_chars,
+          1,
+          GLOBAL_TEXT_LIMITS.POST_JOB_SUMMARY,
+          "Job summary"
+        ),
+        ...CharacterNumberValidator(
+          state.company_summary_chars,
+          1,
+          GLOBAL_TEXT_LIMITS.POST_COMPANY_SUMMARY,
+          "Company summary"
         ),
         ...StringValidator(state.company_name, 0, 50, "Company name"),
         ...ListValidator(state.skills, 1, 10, "Skills"),
@@ -149,6 +180,12 @@ const JobPostPage: React.FC<IProps> = () => {
           state.title,
           ALLOWED_CHARS_JOB,
           "Job title"
+        ),
+        ...CharacterNumberValidator(
+          state.job_preview_chars,
+          1,
+          GLOBAL_TEXT_LIMITS.POST_JOB_PREVIEW,
+          "Job preview"
         ),
         ...IsEmptyValidator(state.category, "Job category"),
         ...IsEmptyValidator(state.employment_type, "Employment type"),
@@ -251,6 +288,7 @@ const JobPostPage: React.FC<IProps> = () => {
         company_name: state.company_name,
         company_summary: state.company_summary,
         job_summary: state.job_summary,
+        job_preview: state.job_preview,
         contact_summary: state.contact_summary,
         salary_range_high: state.salary_range_high,
         salary_range_low: state.salary_range_low,
@@ -444,38 +482,111 @@ const JobPostPage: React.FC<IProps> = () => {
                     />
                   </Form.Group>
 
-                  <Form.TextArea
-                    width={12}
-                    onChange={handleTextAreaChange}
-                    name="company_summary"
-                    maxLength="500"
-                    placeholder="A well established construction company based in the heart of Melbourne..."
-                    label={`About the company (${
-                      500 - state.company_summary.length
-                    } chars remaining)`}
-                  />
+                  <Form.Group>
+                    <div className="field">
+                      <label style={{ display: "block" }}>
+                        About the company ({2000 - state.company_summary_chars}{" "}
+                        chars remaining)
+                      </label>
+                      <ReactQuill
+                        value={state.company_summary}
+                        modules={QUILL_SETTINGS.MODULES}
+                        formats={QUILL_SETTINGS.FORMATS}
+                        placeholder="A great company based in..."
+                        onChange={(
+                          company_summary,
+                          delta,
+                          sources,
+                          methods
+                        ) => {
+                          const company_summary_chars = methods.getLength()
+                          setState({
+                            ...state,
+                            company_summary,
+                            company_summary_chars,
+                          })
+                        }}
+                      />
+                    </div>
+                  </Form.Group>
 
-                  <Form.TextArea
-                    width={12}
-                    onChange={handleTextAreaChange}
-                    name="job_summary"
-                    maxLength="500"
-                    placeholder="A short description about the job"
-                    label={`About the job (${
-                      500 - state.job_summary.length
-                    } chars remaining)`}
-                  />
+                  <Form.Group>
+                    <div className="field">
+                      <label style={{ display: "block" }}>
+                        Job preview description (
+                        {GLOBAL_TEXT_LIMITS.POST_JOB_PREVIEW -
+                          state.job_preview_chars}{" "}
+                        chars remaining)
+                      </label>
+                      <ReactQuill
+                        value={state.job_preview}
+                        modules={QUILL_SETTINGS.MODULES}
+                        formats={QUILL_SETTINGS.FORMATS}
+                        placeholder="Job description, requirements, etc..."
+                        onChange={(job_preview, delta, sources, methods) => {
+                          const job_preview_chars = methods.getLength()
+                          setState({
+                            ...state,
+                            job_preview,
+                            job_preview_chars,
+                          })
+                        }}
+                      />
+                    </div>
+                  </Form.Group>
 
-                  <Form.TextArea
-                    width={12}
-                    onChange={handleTextAreaChange}
-                    name="contact_summary"
-                    maxLength="500"
-                    placeholder="Enter any contact details..."
-                    label={`Contact details (${
-                      500 - state.contact_summary.length
-                    } chars remaining)`}
-                  />
+                  <Form.Group>
+                    <div className="field">
+                      <label style={{ display: "block" }}>
+                        About the job (
+                        {GLOBAL_TEXT_LIMITS.POST_JOB_SUMMARY -
+                          state.job_summary_chars}{" "}
+                        chars remaining)
+                      </label>
+                      <ReactQuill
+                        value={state.job_summary}
+                        modules={QUILL_SETTINGS.MODULES}
+                        formats={QUILL_SETTINGS.FORMATS}
+                        placeholder="Job description, requirements, etc..."
+                        onChange={(job_summary, delta, sources, methods) => {
+                          const job_summary_chars = methods.getLength()
+                          setState({
+                            ...state,
+                            job_summary,
+                            job_summary_chars,
+                          })
+                        }}
+                      />
+                    </div>
+                  </Form.Group>
+
+                  <Form.Group>
+                    <div className="field">
+                      <label style={{ display: "block" }}>
+                        Contact details ({500 - state.contact_summary_chars}{" "}
+                        chars remaining)
+                      </label>
+                      <ReactQuill
+                        value={state.contact_summary}
+                        modules={QUILL_SETTINGS.MODULES}
+                        formats={QUILL_SETTINGS.FORMATS}
+                        placeholder="Email, phone number etc..."
+                        onChange={(
+                          contact_summary,
+                          delta,
+                          sources,
+                          methods
+                        ) => {
+                          const contact_summary_chars = methods.getLength()
+                          setState({
+                            ...state,
+                            contact_summary,
+                            contact_summary_chars,
+                          })
+                        }}
+                      />
+                    </div>
+                  </Form.Group>
 
                   <Form.Button
                     loading={jobPost.isFetching}
