@@ -483,7 +483,7 @@ const JobPostPage: React.FC<IProps> = () => {
                   </Form.Group>
 
                   <Form.Group>
-                    <div className="field">
+                    <div className="field" style={{ width: "100%" }}>
                       <label style={{ display: "block" }}>
                         About the company ({2000 - state.company_summary_chars}{" "}
                         chars remaining)
@@ -511,7 +511,7 @@ const JobPostPage: React.FC<IProps> = () => {
                   </Form.Group>
 
                   <Form.Group>
-                    <div className="field">
+                    <div className="field" style={{ width: "100%" }}>
                       <label style={{ display: "block" }}>
                         Job preview description (
                         {GLOBAL_TEXT_LIMITS.POST_JOB_PREVIEW -
@@ -522,7 +522,7 @@ const JobPostPage: React.FC<IProps> = () => {
                         value={state.job_preview}
                         modules={QUILL_SETTINGS.MODULES}
                         formats={QUILL_SETTINGS.FORMATS}
-                        placeholder="Job description, requirements, etc..."
+                        placeholder="A short job description preview..."
                         onChange={(job_preview, delta, sources, methods) => {
                           const job_preview_chars = methods.getLength()
                           setState({
@@ -536,7 +536,7 @@ const JobPostPage: React.FC<IProps> = () => {
                   </Form.Group>
 
                   <Form.Group>
-                    <div className="field">
+                    <div className="field" style={{ width: "100%" }}>
                       <label style={{ display: "block" }}>
                         About the job (
                         {GLOBAL_TEXT_LIMITS.POST_JOB_SUMMARY -
@@ -547,7 +547,7 @@ const JobPostPage: React.FC<IProps> = () => {
                         value={state.job_summary}
                         modules={QUILL_SETTINGS.MODULES}
                         formats={QUILL_SETTINGS.FORMATS}
-                        placeholder="Job description, requirements, etc..."
+                        placeholder="Job description, requirements, responsibilites, etc..."
                         onChange={(job_summary, delta, sources, methods) => {
                           const job_summary_chars = methods.getLength()
                           setState({
@@ -561,7 +561,7 @@ const JobPostPage: React.FC<IProps> = () => {
                   </Form.Group>
 
                   <Form.Group>
-                    <div className="field">
+                    <div className="field" style={{ width: "100%" }}>
                       <label style={{ display: "block" }}>
                         Contact details ({500 - state.contact_summary_chars}{" "}
                         chars remaining)
