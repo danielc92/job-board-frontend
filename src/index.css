@@ -32,3 +32,22 @@ label {
 .ui.toggle.checkbox input:focus:checked ~ label:before {
   background-color: #21ba45 !important;
 }
+
+/* Overrides for quill editor */
+.ql-toolbar.ql-snow {
+  border-top-left-radius: 0.28571429rem;
+  border-top-right-radius: 0.28571429rem;
+  border-color: rgba(34, 36, 38, 0.15) !important;
+}
+
+.ql-container.ql-snow {
+  border-bottom-left-radius: 0.28571429rem;
+  border-bottom-right-radius: 0.28571429rem;
+  border-color: rgba(34, 36, 38, 0.15) !important;
+  font-size: 1em !important;
+}
+
+.ql-editor.ql-blank::before {
+  color: rgba(191, 191, 191, 0.87) !important;
+  font-style: normal !important;
+}
