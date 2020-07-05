@@ -29,3 +29,25 @@ export const ROUTES = {
   PROFILE: "/profile",
 }
 
+export const QUILL_SETTINGS = {
+  MODULES: {
+    toolbar: [
+      [{ header: [3, false] }],
+      ["bold", "italic", "underline", "blockquote"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["link"],
+      ["clean"],
+    ],
+  },
+  FORMATS: [
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "blockquote",
+    "list",
+    "bullet",
+    "indent",
+    "link",
+  ],
+}
