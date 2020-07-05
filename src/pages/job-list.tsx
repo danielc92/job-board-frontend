@@ -321,6 +321,7 @@ const JobListPage: React.FC<IProps> = () => {
                     disabled={!userSelector.isAuthenticated}
                     color="yellow"
                     onClick={saveSearch}
+                    size="tiny"
                   >
                     <Icon name="star"></Icon>Save search
                   </Button>
