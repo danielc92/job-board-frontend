@@ -45,6 +45,7 @@ label {
   border-bottom-right-radius: 0.28571429rem;
   border-color: rgba(34, 36, 38, 0.15) !important;
   font-size: 1em !important;
+  min-height: 80px;
 }
 
 .ql-editor.ql-blank::before {
