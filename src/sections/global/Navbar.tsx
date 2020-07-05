@@ -1,5 +1,11 @@
 import React, { Fragment } from "react"
-import { Menu, Container, Button } from "semantic-ui-react"
+import {
+  Menu,
+  Container,
+  Button,
+  Dropdown,
+  DropdownDivider,
+} from "semantic-ui-react"
 import { selectUser, logoutUser } from "features/account-auth"
 import { useSelector, useDispatch } from "react-redux"
 import { Link, useHistory } from "react-router-dom"
@@ -39,38 +45,71 @@ const Navbar: React.FC<IProps> = () => {
           <Menu.Item as={Link} to={ROUTES.JOB_LIST} name="Explore jobs" />
           <Menu.Item as={Link} to={ROUTES.NEWS_LIST} name="news" />
 
-          {user.isAuthenticated && user.user ? (
-            <Fragment>
-              <Menu.Item as={Link} to={ROUTES.PROFILE} name="profile" />
-              <Menu.Item
-                as={Link}
-                to={ROUTES.PROFILE_SAVED_JOBS}
-                name="saved jobs"
-              />
-              <Menu.Item
-                as={Link}
-                to={ROUTES.PROFILE_SAVED_SEARCH}
-                name="saved search"
-              />
-            </Fragment>
-          ) : null}
+          {user.isAuthenticated && user.user && (
+            <Dropdown item text="User" pointing>
+              <Dropdown.Menu>
+                <DropdownDivider style={{ marginTop: 0 }} />
+                <Dropdown.Item as={Link} to={ROUTES.PROFILE} text="Profile" />
+                <DropdownDivider />
+                <Dropdown.Item
+                  as={Link}
+                  to={ROUTES.PROFILE_SAVED_JOBS}
+                  text="Saved jobs"
+                />
+                <DropdownDivider />
+                <Dropdown.Item
+                  as={Link}
+                  to={ROUTES.PROFILE_SAVED_SEARCH}
+                  text="Saved search"
+                />
+                <DropdownDivider />
 
-          {user.isAuthenticated && user.user && user.user.is_employer ? (
-            <Fragment>
-              <Menu.Item as={Link} to={ROUTES.JOB_CREATE} name="Post a job" />
-              <Menu.Item
+                {user.isAuthenticated && user.user && user.user.is_employer ? (
+                  <Fragment>
+                    <Dropdown.Item
+                      as={Link}
+                      to={ROUTES.JOB_CREATE}
+                      text="Post a job"
+                    />
+                    <DropdownDivider />
+
+                    <Dropdown.Item
+                      as={Link}
+                      to={ROUTES.JOB_POSTINGS}
+                      text="My postings"
+                    />
+                  </Fragment>
+                ) : user.isAuthenticated &&
+                  user.user &&
+                  !user.user.is_employer ? (
+                  <Fragment>
+                    <Dropdown.Item
+                      as={Link}
+                      to={ROUTES.JOB_APPLICATIONS}
+                      text="My applications"
+                    />
+                  </Fragment>
+                ) : null}
+              </Dropdown.Menu>
+            </Dropdown>
+          )}
+
+          <Dropdown item text="More" pointing>
+            <Dropdown.Menu>
+              <DropdownDivider style={{ marginTop: 0 }} />
+              <Dropdown.Item
+                text="Provide feedback"
                 as={Link}
-                to={ROUTES.JOB_POSTINGS}
-                name="my postings"
+                to={ROUTES.FEEDBACK}
               />
-            </Fragment>
-          ) : user.isAuthenticated && user.user && !user.user.is_employer ? (
-            <Menu.Item
-              as={Link}
-              to={ROUTES.JOB_APPLICATIONS}
-              name="my applications"
-            />
-          ) : null}
+              <DropdownDivider />
+              <Dropdown.Item
+                text="FAQ"
+                to={ROUTES.DOCUMENTATION_FAQ}
+                as={Link}
+              ></Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
 
           <Menu.Menu position="right">
             <Menu.Item>
