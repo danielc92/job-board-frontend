@@ -22,6 +22,7 @@ import { selectApplyForJob, applyForJob, reset } from "features/job-application"
 import JobArticlePlaceholder from "sections/job-article/Placeholder"
 import UnavailableJob from "sections/job-article/UnavailableJob"
 import { selectUser } from "features/account-auth"
+import { renderQuillRichText } from "utils/render"
 
 interface IProps {}
 
@@ -74,9 +75,14 @@ const JobArticlePage: React.FC<IProps> = () => {
                 </Header>
                 <Segment padded stacked>
                   <Header as="h4" content="About the job" />
-                  <p style={marginStyle}>
-                    {jobArticle.job.results.job_summary}
-                  </p>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: renderQuillRichText(
+                        jobArticle.job.results.job_summary
+                      ),
+                    }}
+                    style={marginStyle}
+                  />
                   <Grid stackable>
                     <Grid.Row style={marginStyle}>
                       <Grid.Column width={4}>
@@ -150,13 +156,23 @@ const JobArticlePage: React.FC<IProps> = () => {
                   </Grid>
 
                   <Header as="h4" content="About the company" />
-                  <p style={marginStyle}>
-                    {jobArticle.job.results.company_summary}
-                  </p>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: renderQuillRichText(
+                        jobArticle.job.results.company_summary
+                      ),
+                    }}
+                    style={marginStyle}
+                  />
                   <Header as="h4" content="Contact Summary" />
-                  <p style={marginStyle}>
-                    {jobArticle.job.results.contact_summary}
-                  </p>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: renderQuillRichText(
+                        jobArticle.job.results.contact_summary
+                      ),
+                    }}
+                    style={marginStyle}
+                  />
                 </Segment>
 
                 {/* If the job is open allow user to apply */}
