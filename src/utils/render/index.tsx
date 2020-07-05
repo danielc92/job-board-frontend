@@ -81,3 +81,8 @@ export const customRender = (item: DropdownItemProps) => ({
   color: "green",
   content: item.text,
 })
+
+export const renderQuillRichText = (item: string) => {
+  // Remove all the <br> tags, as margins are already calculated on a tag level (p, h1, h2, h3 etc)
+  return item.split("<p><br></p>").join("")
+}
