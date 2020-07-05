@@ -37,6 +37,7 @@ import {
   reset,
 } from "features/account-update-details"
 import { ROUTES } from "settings"
+import { renderQuillRichText } from "utils/render"
 
 const { Line, Paragraph } = Placeholder
 
@@ -330,7 +331,11 @@ const JobListPage: React.FC<IProps> = () => {
                   <Segment stacked padded key={index.toString()}>
                     <Header as="h3" content={properCaseTransform(item.title)} />
 
-                    <p>{item.job_summary}</p>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: renderQuillRichText(item.job_preview),
+                      }}
+                    ></div>
 
                     <Button
                       color="green"
