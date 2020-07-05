@@ -45,27 +45,30 @@ const Navbar: React.FC<IProps> = () => {
           <Menu.Item as={Link} to={ROUTES.JOB_LIST} name="Explore jobs" />
           <Menu.Item as={Link} to={ROUTES.NEWS_LIST} name="news" />
 
-          {user.isAuthenticated && user.user && (
-            <Dropdown item text="User" pointing>
-              <Dropdown.Menu>
-                <DropdownDivider style={{ marginTop: 0 }} />
-                <Dropdown.Item as={Link} to={ROUTES.PROFILE} text="Profile" />
-                <DropdownDivider />
-                <Dropdown.Item
-                  as={Link}
-                  to={ROUTES.PROFILE_SAVED_JOBS}
-                  text="Saved jobs"
-                />
-                <DropdownDivider />
-                <Dropdown.Item
-                  as={Link}
-                  to={ROUTES.PROFILE_SAVED_SEARCH}
-                  text="Saved search"
-                />
-                <DropdownDivider />
+          <Dropdown item text="More" pointing>
+            <Dropdown.Menu>
+              <DropdownDivider style={{ marginTop: 0 }} />
+              <Dropdown.Item
+                text="Provide feedback"
+                as={Link}
+                to={ROUTES.FEEDBACK}
+              />
+              <DropdownDivider />
+              <Dropdown.Item
+                text="FAQ"
+                to={ROUTES.DOCUMENTATION_FAQ}
+                as={Link}
+              ></Dropdown.Item>
+              <DropdownDivider style={{ marginBottom: 0 }} />
+            </Dropdown.Menu>
+          </Dropdown>
 
+          {user.isAuthenticated && user.user && (
+            <Dropdown item text={user.user.email} pointing>
+              <Dropdown.Menu>
                 {user.isAuthenticated && user.user && user.user.is_employer ? (
                   <Fragment>
+                    <DropdownDivider style={{ marginTop: 0 }} />
                     <Dropdown.Item
                       as={Link}
                       to={ROUTES.JOB_CREATE}
@@ -83,6 +86,7 @@ const Navbar: React.FC<IProps> = () => {
                   user.user &&
                   !user.user.is_employer ? (
                   <Fragment>
+                    <DropdownDivider style={{ marginTop: 0 }} />
                     <Dropdown.Item
                       as={Link}
                       to={ROUTES.JOB_APPLICATIONS}
@@ -90,26 +94,24 @@ const Navbar: React.FC<IProps> = () => {
                     />
                   </Fragment>
                 ) : null}
+                <DropdownDivider />
+                <Dropdown.Item as={Link} to={ROUTES.PROFILE} text="Profile" />
+                <DropdownDivider />
+                <Dropdown.Item
+                  as={Link}
+                  to={ROUTES.PROFILE_SAVED_JOBS}
+                  text="Saved jobs"
+                />
+                <DropdownDivider />
+                <Dropdown.Item
+                  as={Link}
+                  to={ROUTES.PROFILE_SAVED_SEARCH}
+                  text="Saved search"
+                />
+                <DropdownDivider style={{ marginBottom: 0 }} />
               </Dropdown.Menu>
             </Dropdown>
           )}
-
-          <Dropdown item text="More" pointing>
-            <Dropdown.Menu>
-              <DropdownDivider style={{ marginTop: 0 }} />
-              <Dropdown.Item
-                text="Provide feedback"
-                as={Link}
-                to={ROUTES.FEEDBACK}
-              />
-              <DropdownDivider />
-              <Dropdown.Item
-                text="FAQ"
-                to={ROUTES.DOCUMENTATION_FAQ}
-                as={Link}
-              ></Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
 
           <Menu.Menu position="right">
             <Menu.Item>
