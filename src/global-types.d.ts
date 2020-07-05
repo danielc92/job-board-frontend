@@ -67,7 +67,7 @@ interface IMyApplcation {
 interface IMyPost {
   open: boolean
   _id: string
-  job_summary: string
+  job_preview
   title: string
   createdAt: string
 }
@@ -102,6 +102,7 @@ interface IApiJob {
   benefits: string[]
   skills: string[]
   job_summary: string
+  job_preview: string
   contact_summary: string
   company_summary: string
   requirements: string[]
