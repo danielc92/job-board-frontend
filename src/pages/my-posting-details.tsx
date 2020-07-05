@@ -176,128 +176,132 @@ const PostingDetailsPage: React.FC<IProps> = () => {
               </Modal.Content>
             )}
 
-            <Modal.Content>
-              {profile.isFetching ? (
-                <Placeholder>
-                  <Placeholder.Header></Placeholder.Header>
-                  <Placeholder.Line></Placeholder.Line>
-                  <Placeholder.Line></Placeholder.Line>
-                  <Placeholder.Line></Placeholder.Line>
-                  <Placeholder.Line></Placeholder.Line>
-                  <Placeholder.Line></Placeholder.Line>
-                  <Placeholder.Line></Placeholder.Line>
-                  <Placeholder.Header></Placeholder.Header>
-                  <Placeholder.Line></Placeholder.Line>
-                  <Placeholder.Line></Placeholder.Line>
-                  <Placeholder.Line></Placeholder.Line>
-                  <Placeholder.Line></Placeholder.Line>
-                  <Placeholder.Line></Placeholder.Line>
-                  <Placeholder.Line></Placeholder.Line>
-                </Placeholder>
-              ) : profile.error ? (
-                <p>
-                  An error occured while fetching this applicants profilel
-                  details.
-                </p>
-              ) : profile.profile ? (
-                <Fragment>
-                  <Header as="h2" content="Career Profile" />
-                  <Divider />
+            {activeApplication.status !== "withdrawn" && (
+              <Modal.Content>
+                {profile.isFetching ? (
+                  <Placeholder>
+                    <Placeholder.Header></Placeholder.Header>
+                    <Placeholder.Line></Placeholder.Line>
+                    <Placeholder.Line></Placeholder.Line>
+                    <Placeholder.Line></Placeholder.Line>
+                    <Placeholder.Line></Placeholder.Line>
+                    <Placeholder.Line></Placeholder.Line>
+                    <Placeholder.Line></Placeholder.Line>
+                    <Placeholder.Header></Placeholder.Header>
+                    <Placeholder.Line></Placeholder.Line>
+                    <Placeholder.Line></Placeholder.Line>
+                    <Placeholder.Line></Placeholder.Line>
+                    <Placeholder.Line></Placeholder.Line>
+                    <Placeholder.Line></Placeholder.Line>
+                    <Placeholder.Line></Placeholder.Line>
+                  </Placeholder>
+                ) : profile.error ? (
+                  <p>
+                    An error occured while fetching this applicants profilel
+                    details.
+                  </p>
+                ) : profile.profile ? (
+                  <Fragment>
+                    <Header as="h2" content="Career Profile" />
+                    <Divider />
 
-                  <Header content="Summary" />
+                    <Header content="Summary" />
 
-                  {profile.profile.results.summary.length > 0 ? (
-                    <p>{profile.profile.results.summary}</p>
-                  ) : (
-                    <p>Applicant has no career summary.</p>
-                  )}
+                    {profile.profile.results.summary.length > 0 ? (
+                      <p>{profile.profile.results.summary}</p>
+                    ) : (
+                      <p>Applicant has no career summary.</p>
+                    )}
 
-                  <Header content="Skills" />
-                  {profile.profile.results.skills.length > 0 ? (
-                    <Label.Group>
-                      {profile.profile.results.skills.map((s) => (
-                        <Label color="green" basic size="medium">
-                          {s}
-                        </Label>
-                      ))}
-                    </Label.Group>
-                  ) : (
-                    <p>
-                      Applicant does not have any skills added to their profile.
-                    </p>
-                  )}
-
-                  <Header content="Availability" />
-                  {profile.profile.results.available ? (
-                    <p>
-                      Applicant is currently <strong>available</strong> for jobs
-                      and contactable via {profile.profile.results.phone}.
-                    </p>
-                  ) : (
-                    <p>
-                      Applicant is currently <strong>unavailable</strong> for
-                      jobs.
-                    </p>
-                  )}
-
-                  <Header content="Experience" />
-                  {profile.profile.results.experience.length > 0 ? (
-                    <Table striped celled>
-                      <Table.Header>
-                        <Table.HeaderCell content="Title" />
-                        <Table.HeaderCell content="Company" />
-                        <Table.HeaderCell content="Started" />
-                        <Table.HeaderCell content="Ended" />
-                        <Table.HeaderCell content="Details" />
-                      </Table.Header>
-                      <Table.Body>
-                        {profile.profile.results.experience.map((e) => (
-                          <Table.Row key={e.key}>
-                            <Table.Cell content={e.title} />
-                            <Table.Cell content={e.company} />
-                            <Table.Cell content={e.start} />
-                            <Table.Cell content={e.end} />
-                            <Table.Cell content={e.details} />
-                          </Table.Row>
+                    <Header content="Skills" />
+                    {profile.profile.results.skills.length > 0 ? (
+                      <Label.Group>
+                        {profile.profile.results.skills.map((s) => (
+                          <Label color="green" basic size="medium">
+                            {s}
+                          </Label>
                         ))}
-                      </Table.Body>
-                    </Table>
-                  ) : (
-                    <p>
-                      Applicant does not have any recorded experience details.
-                    </p>
-                  )}
+                      </Label.Group>
+                    ) : (
+                      <p>
+                        Applicant does not have any skills added to their
+                        profile.
+                      </p>
+                    )}
 
-                  <Header content="Education" />
-                  {profile.profile.results.education.length > 0 ? (
-                    <Table striped celled>
-                      <Table.Header>
-                        <Table.HeaderCell content="School" />
-                        <Table.HeaderCell content="Course" />
-                        <Table.HeaderCell content="Started" />
-                        <Table.HeaderCell content="Ended" />
-                        <Table.HeaderCell content="Grade/GPA" />
-                      </Table.Header>
-                      <Table.Body>
-                        {profile.profile.results.education.map((e) => (
-                          <Table.Row key={e.key}>
-                            <Table.Cell content={e.school} />
-                            <Table.Cell content={e.course} />
-                            <Table.Cell content={e.start} />
-                            <Table.Cell content={e.end} />
-                            <Table.Cell content={e.gpa} />
-                          </Table.Row>
-                        ))}
-                      </Table.Body>
-                    </Table>
-                  ) : (
-                    <p>
-                      Applicant does not have any recorded education details.
-                    </p>
-                  )}
-                </Fragment>
-              ) : null}
-            </Modal.Content>
+                    <Header content="Availability" />
+                    {profile.profile.results.available ? (
+                      <p>
+                        Applicant is currently <strong>available</strong> for
+                        jobs and contactable via {profile.profile.results.phone}
+                        .
+                      </p>
+                    ) : (
+                      <p>
+                        Applicant is currently <strong>unavailable</strong> for
+                        jobs.
+                      </p>
+                    )}
+
+                    <Header content="Experience" />
+                    {profile.profile.results.experience.length > 0 ? (
+                      <Table striped celled>
+                        <Table.Header>
+                          <Table.HeaderCell content="Title" />
+                          <Table.HeaderCell content="Company" />
+                          <Table.HeaderCell content="Started" />
+                          <Table.HeaderCell content="Ended" />
+                          <Table.HeaderCell content="Details" />
+                        </Table.Header>
+                        <Table.Body>
+                          {profile.profile.results.experience.map((e) => (
+                            <Table.Row key={e.key}>
+                              <Table.Cell content={e.title} />
+                              <Table.Cell content={e.company} />
+                              <Table.Cell content={e.start} />
+                              <Table.Cell content={e.end} />
+                              <Table.Cell content={e.details} />
+                            </Table.Row>
+                          ))}
+                        </Table.Body>
+                      </Table>
+                    ) : (
+                      <p>
+                        Applicant does not have any recorded experience details.
+                      </p>
+                    )}
+
+                    <Header content="Education" />
+                    {profile.profile.results.education.length > 0 ? (
+                      <Table striped celled>
+                        <Table.Header>
+                          <Table.HeaderCell content="School" />
+                          <Table.HeaderCell content="Course" />
+                          <Table.HeaderCell content="Started" />
+                          <Table.HeaderCell content="Ended" />
+                          <Table.HeaderCell content="Grade/GPA" />
+                        </Table.Header>
+                        <Table.Body>
+                          {profile.profile.results.education.map((e) => (
+                            <Table.Row key={e.key}>
+                              <Table.Cell content={e.school} />
+                              <Table.Cell content={e.course} />
+                              <Table.Cell content={e.start} />
+                              <Table.Cell content={e.end} />
+                              <Table.Cell content={e.gpa} />
+                            </Table.Row>
+                          ))}
+                        </Table.Body>
+                      </Table>
+                    ) : (
+                      <p>
+                        Applicant does not have any recorded education details.
+                      </p>
+                    )}
+                  </Fragment>
+                ) : null}
+              </Modal.Content>
+            )}
 
             <Modal.Actions>
               <Button
