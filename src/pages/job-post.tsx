@@ -259,9 +259,8 @@ const JobPostPage: React.FC<IProps> = () => {
     let numErrors = errors.length
 
     if (numErrors === maxErrors) return 0
-    else if (numErrors === 0) {
-      return 100
-    }
+    if (numErrors === 0) return 100
+
     return ((maxErrors - numErrors) / maxErrors) * 100
   }
 
