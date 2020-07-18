@@ -27,7 +27,7 @@ const Navbar: React.FC<IProps> = () => {
     <Fragment>
       <ImportantAlert message="This website is currently in development phase." />
       <Menu
-        color="violet"
+        color="green"
         pointing
         stackable
         style={{ margin: "0", borderRadius: "0", boxShadow: "none" }}
