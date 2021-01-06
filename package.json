@@ -17,7 +17,7 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/redux-logger": "^3.0.7",
     "@types/semantic-ui": "^2.2.7",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.15",
     "prettier": "^2.0.5",
